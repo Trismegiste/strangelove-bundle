@@ -13,6 +13,8 @@ use MongoDB\BSON\ObjectIdInterface;
  */
 trait RootImpl {
 
+    use PersistableImpl;
+
     protected $_id;
 
     public function getPk(): ObjectIdInterface {

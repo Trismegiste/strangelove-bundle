@@ -17,5 +17,10 @@
         "psr-4": {
             "Trismegiste\\Toolbox\\": "src/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\Fixtures\\": "tests/fixtures/"
+        }
     }
 }
