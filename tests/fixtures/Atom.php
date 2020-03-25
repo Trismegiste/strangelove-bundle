@@ -13,9 +13,27 @@ use Trismegiste\Toolbox\MongoDb\RootImpl;
  * Description of Atom
  */
 class Atom implements Root {
+
     use RootImpl;
-    
-    public function __construct() {
-        ;
+
+    protected $nucleus;
+    protected $electron;
+
+    public function __construct(Nucleus $nucl, array $electron) {
+        $this->nucleus = $nucl;
+        $this->electron = $electron;
     }
+
+    public function isIonized() {
+        return count($this->electron) != $this->nucleus->getElectricCharge();
+    }
+
+    public function addElectron(Lepton $elec) {
+        array_push($elec);
+    }
+
+    public function looseElectron(): Lepton {
+        return array_pop($this->electron);
+    }
+
 }

@@ -15,5 +15,4 @@ use Trismegiste\Toolbox\MongoDb\PersistableImpl;
 class Lepton extends Elementary implements Persistable {
 
     use PersistableImpl;
-    //put your code here
 }
