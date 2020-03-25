@@ -35,4 +35,8 @@ class MongoTestable extends TestCase {
         return $rows[0];
     }
 
+    protected function assertValidMongoId(string $pk) {
+        $this->assertRegExp('/^[a-f0-9]{24}$/', $pk);
+    }
+
 }

@@ -9,7 +9,7 @@ namespace Tests\Fixtures;
 /**
  * Description of Hadron
  */
-class Hadron extends Elementary {
+class Hadron extends Elementary implements ElectricCharge {
 
     protected $quark;
 
@@ -20,6 +20,15 @@ class Hadron extends Elementary {
 
     public function getQuark(): array {
         return new \ArrayIterator($this->quark);
+    }
+
+    public function getElectricCharge(): float {
+        $sum = 0;
+        foreach ($this->quark as $q) {
+            $sum += $q->getElectricCharge();
+        }
+
+        return $sum;
     }
 
 }
