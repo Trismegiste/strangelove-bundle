@@ -28,4 +28,8 @@ trait RootImpl {
         $this->_id = $pk;
     }
 
+    public function isNew(): bool {
+        return is_null($this->_id);
+    }
+
 }

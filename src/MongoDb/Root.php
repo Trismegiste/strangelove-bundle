@@ -17,4 +17,6 @@ interface Root extends Persistable {
     public function getPk(): ObjectIdInterface;
 
     public function setPk(ObjectIdInterface $pk): void;
+
+    public function isNew(): bool;
 }
