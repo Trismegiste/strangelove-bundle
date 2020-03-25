@@ -1,0 +1,21 @@
+{
+    "name": "trismegiste/toolbox",
+    "description": "Library of useful tools",
+    "type": "library",
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Trismegiste",
+            "email": "flo@trismegiste.net"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Trismegiste\\Toolbox\\": "src/"
+        }
+    }
+}
