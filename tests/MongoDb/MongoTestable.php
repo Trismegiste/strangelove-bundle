@@ -4,14 +4,17 @@
  * Toolbox
  */
 
-use MongoDB\BSON\ObjectId;
+namespace Tests\Toolbox\MongoDb;
+
 use MongoDB\Driver\BulkWrite;
 use MongoDB\Driver\Manager;
 use MongoDB\Driver\Query;
 use PHPUnit\Framework\TestCase;
-use Tests\Fixtures\Elementary;
 
-class RootTest extends TestCase {
+/**
+ * Description of MongoTestable
+ */
+class MongoTestable extends TestCase {
 
     protected $mongo;
 
@@ -30,12 +33,6 @@ class RootTest extends TestCase {
         $this->assertInstanceOf(get_class($obj), $rows[0]);
 
         return $rows[0];
-    }
-
-    public function testSimple() {
-        $obj = $this->resetWriteAndRead(new Elementary("quark top"));
-        $this->assertInstanceOf(ObjectId::class, $obj->getPk());
-      //  print_r($obj);
     }
 
 }
