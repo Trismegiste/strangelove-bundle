@@ -21,4 +21,11 @@ trait RootImpl {
         return $this->_id;
     }
 
+    public function setPk(ObjectIdInterface $pk): void {
+        if (!is_null($this->_id)) {
+            throw new LogicException('You cannot override an existing PK');
+        }
+        $this->_id = $pk;
+    }
+
 }

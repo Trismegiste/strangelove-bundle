@@ -13,7 +13,7 @@ trait PersistableImpl {
 
     public function bsonSerialize() {
         $ret = [];
-        foreach ($this as $key => $val) {
+        foreach (get_object_vars($this) as $key => $val) {
             if (('_id' === $key) && is_null($val)) {
                 continue;
             }

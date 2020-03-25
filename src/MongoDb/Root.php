@@ -15,4 +15,6 @@ use MongoDB\BSON\Persistable;
 interface Root extends Persistable {
 
     public function getPk(): ObjectIdInterface;
+
+    public function setPk(ObjectIdInterface $pk): void;
 }
