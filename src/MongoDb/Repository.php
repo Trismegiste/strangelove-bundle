@@ -22,5 +22,7 @@ interface Repository {
 
     public function save($documentOrArray): void;
 
+    public function delete($documentOrArray): void;
+
     public function searchAutocomplete(string $field, string $startWith, $limit = 20);
 }

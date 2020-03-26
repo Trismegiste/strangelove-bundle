@@ -102,4 +102,27 @@ class DefaultRepository implements Repository {
         return $cursor->toArray();
     }
 
+    public function delete($documentOrArray): void {
+        if (!is_array($documentOrArray)) {
+            $documentOrArray = [$documentOrArray];
+        }
+
+        $bulk = new BulkWrite();
+
+        foreach ($documentOrArray as $doc) {
+            if (!($doc instanceof Root)) {
+                throw new LogicException("Could only delete objects implementing " . Root::class);
+            }
+
+            if ($doc->isNew()) {
+                throw new LogicException("Cannot delete a non-inserted object");
+            } else {
+                $bulk->delete(['_id' => $doc->getPk()]);
+            }
+        }
+
+        $result = $this->manager->executeBulkWrite($this->getNamespace(), $bulk);
+        // @todo some managment of $result
+    }
+
 }
