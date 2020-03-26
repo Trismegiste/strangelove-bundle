@@ -93,7 +93,7 @@ class DefaultRepository implements Repository {
         return new \IteratorIterator($cursor);
     }
 
-    public function searchAutocomplete(string $field, string $startWith, $limit = 20): array {
+    public function searchAutocomplete(string $field, string $startWith, int $limit = 20): array {
         $cursor = $this->manager->executeQuery($this->getNamespace(), new Query(
                         [$field => new Regex('^' . $startWith, 'i')],
                         ['limit' => $limit, 'sort' => [$field => 1], 'projection' => [$field => true]]
