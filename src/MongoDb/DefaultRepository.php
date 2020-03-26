@@ -95,7 +95,7 @@ class DefaultRepository implements Repository {
 
     public function searchAutocomplete(string $field, string $startWith, $limit = 20): array {
         $cursor = $this->manager->executeQuery($this->getNamespace(), new Query(
-                        [$field => new Regex('^' . $startWith)],
+                        [$field => new Regex('^' . $startWith, 'i')],
                         ['limit' => $limit, 'sort' => [$field => 1], 'projection' => [$field => true]]
         ));
 
