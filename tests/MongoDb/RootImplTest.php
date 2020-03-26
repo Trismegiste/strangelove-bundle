@@ -6,6 +6,7 @@
 
 namespace Tests\Toolbox\MongoDb;
 
+use MongoDB\BSON\ObjectId;
 use MongoDB\Driver\BulkWrite;
 use MongoDB\Driver\Query;
 use Tests\Fixtures\Atom;
@@ -27,17 +28,19 @@ class RootImplTest extends MongoTestable {
         $helion = new Nucleus([$proton, $proton, $neutron, $neutron]);
         $electron = new Lepton('electron');
         $atom = new Atom($helion, [$electron, $electron]);
+        $atom->setPk(new ObjectId());
 
         $fromDb = $this->resetWriteAndRead($atom);
         $this->assertFalse($fromDb->isIonized());
         $this->assertValidMongoId($fromDb->getPk());
+        $this->assertEquals($atom, $fromDb);
 
         $fromDb->looseElectron();
         $bulk = new BulkWrite();
         $bulk->update(['_id' => $fromDb->getPk()], $fromDb);
-        $this->mongo->executeBulkWrite('testdb.collection', $bulk);
+        $this->mongo->executeBulkWrite('trismegiste_toolbox.collection', $bulk);
 
-        $cursor = $this->mongo->executeQuery('testdb.collection', new Query([]));
+        $cursor = $this->mongo->executeQuery('trismegiste_toolbox.collection', new Query([]));
         $fromDb = iterator_to_array($cursor);
         $this->assertCount(1, $fromDb);
 

@@ -26,8 +26,8 @@ class MongoTestable extends TestCase {
         $bulk = new BulkWrite(['ordered' => true]);
         $bulk->delete([]);
         $bulk->insert($obj);
-        $this->mongo->executeBulkWrite('testdb.collection', $bulk);
-        $cursor = $this->mongo->executeQuery('testdb.collection', new Query([]));
+        $this->mongo->executeBulkWrite('trismegiste_toolbox.collection', $bulk);
+        $cursor = $this->mongo->executeQuery('trismegiste_toolbox.collection', new Query([]));
         $rows = iterator_to_array($cursor);
         $this->assertCount(1, $rows);
         $this->assertInstanceOf(get_class($obj), $rows[0]);
