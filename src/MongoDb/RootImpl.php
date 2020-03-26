@@ -6,6 +6,7 @@
 
 namespace Trismegiste\Toolbox\MongoDb;
 
+use LogicException;
 use MongoDB\BSON\ObjectIdInterface;
 
 /**

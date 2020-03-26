@@ -29,11 +29,15 @@ class Atom implements Root {
     }
 
     public function addElectron(Lepton $elec) {
-        array_push($elec);
+        array_push($this->electron, $elec);
     }
 
     public function looseElectron(): Lepton {
         return array_pop($this->electron);
+    }
+
+    public function getAtomicNumber(): int {
+        return $this->nucleus->getAtomicNumber();
     }
 
 }

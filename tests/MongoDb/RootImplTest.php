@@ -20,7 +20,7 @@ use Tests\Fixtures\Quark;
  */
 class RootImplTest extends MongoTestable {
 
-    public function testComplexWithRoot() {
+    protected function createAtom() {
         $up = new Quark('up', 2 / 3);
         $down = new Quark('down', -1 / 3);
         $proton = new Hadron('proton', [$up, $up, $down]);
@@ -28,6 +28,12 @@ class RootImplTest extends MongoTestable {
         $helion = new Nucleus([$proton, $proton, $neutron, $neutron]);
         $electron = new Lepton('electron');
         $atom = new Atom($helion, [$electron, $electron]);
+
+        return $atom;
+    }
+
+    public function testComplexWithRoot() {
+        $atom = $this->createAtom();
         $atom->setPk(new ObjectId());
 
         $fromDb = $this->resetWriteAndRead($atom);
@@ -46,6 +52,13 @@ class RootImplTest extends MongoTestable {
 
         $ion = $fromDb[0];
         $this->assertTrue($ion->isIonized());
+    }
+
+    public function testCannotChangePrimaryKey() {
+        $this->expectException(\LogicException::class);
+        $atom = $this->createAtom();
+        $atom->setPk(new ObjectId());
+        $atom->setPk(new ObjectId());
     }
 
 }
