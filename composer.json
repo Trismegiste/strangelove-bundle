@@ -12,7 +12,10 @@
             "email": "flo@trismegiste.net"
         }
     ],
-    "require": {},
+    "require": {
+        "php": ">7.3",
+        "ext-mongodb": ">1.7"
+    },
     "autoload": {
         "psr-4": {
             "Trismegiste\\Toolbox\\": "src/"
