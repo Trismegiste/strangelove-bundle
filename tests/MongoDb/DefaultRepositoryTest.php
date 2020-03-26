@@ -6,14 +6,16 @@
 
 namespace Tests\Toolbox\MongoDb;
 
+use LogicException;
+use MongoDB\BSON\ObjectIdInterface;
 use MongoDB\Driver\BulkWrite;
 use MongoDB\Driver\Manager;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
+use stdClass;
 use Tests\Fixtures\Atom;
-use Tests\Fixtures\Hadron;
+use Tests\Fixtures\AtomBuilder;
 use Tests\Fixtures\Lepton;
-use Tests\Fixtures\Nucleus;
-use Tests\Fixtures\Quark;
 use Trismegiste\Toolbox\MongoDb\DefaultRepository;
 
 /**
@@ -21,20 +23,10 @@ use Trismegiste\Toolbox\MongoDb\DefaultRepository;
  */
 class DefaultRepositoryTest extends TestCase {
 
+    use AtomBuilder;
+
     protected $mongo;
     protected $sut;
-
-    protected function createAtom(int $z, int $w): Atom {
-        $up = new Quark('up', 2 / 3);
-        $down = new Quark('down', -1 / 3);
-        $proton = new Hadron('proton', [$up, $up, $down]);
-        $neutron = new Hadron('neutron', [$up, $down, $down]);
-        $nucleus = new Nucleus(array_merge(array_fill(0, $z, $proton), array_fill($z, $w - $z, $neutron)));
-        $electron = new Lepton('electron');
-        $atom = new Atom($nucleus, array_fill(0, $z, $electron));
-
-        return $atom;
-    }
 
     protected function setUp(): void {
         $this->mongo = new Manager('mongodb://localhost:27017');
@@ -42,14 +34,14 @@ class DefaultRepositoryTest extends TestCase {
     }
 
     public function testReset() {
-        $bulk = new BulkWrite(['ordered' => true]);
+        $bulk = new BulkWrite();
         $bulk->delete([]);
         $result = $this->mongo->executeBulkWrite('trismegiste_toolbox.repo_test', $bulk);
         $this->assertTrue($result->isAcknowledged());
     }
 
     public function testSave() {
-        $doc = $this->createAtom(92, 235);
+        $doc = $this->createAtom('U235', 92, 235);
         $this->sut->save($doc);
         $this->assertRegExp('/^[a-f0-9]{24}$/', $doc->getPk());
 
@@ -89,7 +81,7 @@ class DefaultRepositoryTest extends TestCase {
     public function testProjection() {
         $iter = $this->sut->search([], ['electron']); // we don't care about electrons
         list($atom) = iterator_to_array($iter);
-        // the property array 'electron' in Atom was not restored, therefore, it creates an error when you array_push
+        // the property array 'electron' in Atom was not restored, therefore, it creates an error when you array_push()
         $this->expectError();
         $this->expectErrorMessage('null given');
         $atom->addElectron(new Lepton('electron'));
@@ -99,7 +91,7 @@ class DefaultRepositoryTest extends TestCase {
         $pk = [];
         $stopwatch = microtime(true);
         for ($k = 0; $k < 1000; $k++) {
-            $doc = $this->createAtom(92, 235); // 92 + 235*4 ~ 1000 objects per Atom object
+            $doc = $this->createAtom('U235', 92, 235); // 92 + 235*4 ~ 1000 objects per Atom object
             $this->sut->save($doc);
             $pk[] = $doc->getPk();
         }
@@ -112,6 +104,42 @@ class DefaultRepositoryTest extends TestCase {
         }
         $delta = microtime(true) - $stopwatch;
         var_dump($delta);  // about 1.7 seconds for 1 million simple objects on my cheap laptop on Ubuntu
+    }
+
+    public function testAutocompleteSearch() {
+        $result = $this->sut->searchAutocomplete('name', 'U');
+        $this->assertCount(1, $result);
+        $this->assertInstanceOf(ObjectIdInterface::class, $result[0]->_id);
+        $this->assertEquals('U235', $result[0]->name);
+    }
+
+    public function testDelete() {
+        $result = $this->sut->searchAutocomplete('name', 'U');
+        $pk = $result[0]->_id;
+        $atom = $this->sut->load($pk);
+        $this->sut->delete($atom);
+        $result = $this->sut->searchAutocomplete('name', 'U');
+        $this->assertCount(0, $result);
+    }
+
+    public function testDeleteInvalidObject() {
+        $this->expectException(LogicException::class);
+        $this->sut->delete(new stdClass());
+    }
+
+    public function testSaveInvalidObject() {
+        $this->expectException(LogicException::class);
+        $this->sut->save(new stdClass());
+    }
+
+    public function testDeleteNonInserted() {
+        $this->expectException(LogicException::class);
+        $this->sut->delete($this->createAtom('H', 1, 1));
+    }
+
+    public function testNotFound() {
+        $this->expectException(RuntimeException::class);
+        $this->sut->load('123456789012345678901234');
     }
 
 }

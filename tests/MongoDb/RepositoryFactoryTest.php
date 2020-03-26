@@ -8,6 +8,7 @@ namespace Tests\Toolbox\MongoDb;
 
 use MongoDB\Driver\Manager;
 use PHPUnit\Framework\TestCase;
+use Trismegiste\Toolbox\MongoDb\Repository;
 use Trismegiste\Toolbox\MongoDb\RepositoryFactory;
 
 /**
@@ -16,10 +17,10 @@ use Trismegiste\Toolbox\MongoDb\RepositoryFactory;
 class RepositoryFactoryTest extends TestCase {
 
     public function testCreate() {
-        $mongo = $this->createStub(Manager::class);
-        $sut = new RepositoryFactory($mongo, 'database');
+        $mongo = new Manager('mongodb://localhost:27017');
+        $sut = new RepositoryFactory($mongo, 'trismegiste_toolbox');
 
-        $this->assertInstanceOf(\Trismegiste\Toolbox\MongoDb\Repository::class, $sut->create('collection'));
+        $this->assertInstanceOf(Repository::class, $sut->create('repo_test'));
     }
 
 }

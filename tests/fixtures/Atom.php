@@ -18,10 +18,16 @@ class Atom implements Root {
 
     protected $nucleus;
     protected $electron;
+    protected $name;
 
-    public function __construct(Nucleus $nucl, array $electron) {
+    public function __construct(string $name, Nucleus $nucl, array $electron) {
         $this->nucleus = $nucl;
         $this->electron = $electron;
+        $this->name = $name;
+    }
+
+    public function getName(): string {
+        return $this->name;
     }
 
     public function isIonized() {

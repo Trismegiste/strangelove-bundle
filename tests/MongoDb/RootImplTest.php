@@ -6,34 +6,21 @@
 
 namespace Tests\Toolbox\MongoDb;
 
+use LogicException;
 use MongoDB\BSON\ObjectId;
 use MongoDB\Driver\BulkWrite;
 use MongoDB\Driver\Query;
-use Tests\Fixtures\Atom;
-use Tests\Fixtures\Hadron;
-use Tests\Fixtures\Lepton;
-use Tests\Fixtures\Nucleus;
-use Tests\Fixtures\Quark;
+use Tests\Fixtures\AtomBuilder;
 
 /**
  * Description of RootImplTest
  */
 class RootImplTest extends MongoTestable {
 
-    protected function createAtom() {
-        $up = new Quark('up', 2 / 3);
-        $down = new Quark('down', -1 / 3);
-        $proton = new Hadron('proton', [$up, $up, $down]);
-        $neutron = new Hadron('neutron', [$up, $down, $down]);
-        $helion = new Nucleus([$proton, $proton, $neutron, $neutron]);
-        $electron = new Lepton('electron');
-        $atom = new Atom($helion, [$electron, $electron]);
-
-        return $atom;
-    }
+    use AtomBuilder;
 
     public function testComplexWithRoot() {
-        $atom = $this->createAtom();
+        $atom = $this->createAtom('He', 2, 4);
         $atom->setPk(new ObjectId());
 
         $fromDb = $this->resetWriteAndRead($atom);
@@ -55,8 +42,8 @@ class RootImplTest extends MongoTestable {
     }
 
     public function testCannotChangePrimaryKey() {
-        $this->expectException(\LogicException::class);
-        $atom = $this->createAtom();
+        $this->expectException(LogicException::class);
+        $atom = $this->createAtom('H', 1, 1);
         $atom->setPk(new ObjectId());
         $atom->setPk(new ObjectId());
     }
