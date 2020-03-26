@@ -95,4 +95,23 @@ class DefaultRepositoryTest extends TestCase {
         $atom->addElectron(new Lepton('electron'));
     }
 
+    public function dont_testPerformance() {
+        $pk = [];
+        $stopwatch = microtime(true);
+        for ($k = 0; $k < 1000; $k++) {
+            $doc = $this->createAtom(92, 235); // 92 + 235*4 ~ 1000 objects per Atom object
+            $this->sut->save($doc);
+            $pk[] = $doc->getPk();
+        }
+        $delta = microtime(true) - $stopwatch;
+        var_dump($delta);  // about 2.4 seconds for 1 million simple objects on my cheap laptop on Ubuntu
+        sleep(1);
+        $stopwatch = microtime(true);
+        foreach ($pk as $id) {
+            $this->sut->load($id);
+        }
+        $delta = microtime(true) - $stopwatch;
+        var_dump($delta);  // about 1.7 seconds for 1 million simple objects on my cheap laptop on Ubuntu
+    }
+
 }
