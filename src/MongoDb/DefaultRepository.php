@@ -62,7 +62,7 @@ class DefaultRepository implements Repository {
 
         $rows = iterator_to_array($cursor);
         if (count($rows) !== 1) {
-            throw new RuntimeException("Found " . count($rows) . " for the requested key $pk");
+            throw new RuntimeException("The document with _id='$pk' was not found.");
         }
 
         $found = $rows[0];
