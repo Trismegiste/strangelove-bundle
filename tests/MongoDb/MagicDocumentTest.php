@@ -67,6 +67,7 @@ class MagicDocumentTest extends TestCase
     public function testLoad(string $pk)
     {
         $doc = $this->repository->load($pk);
+        $this->assertInstanceOf(MagicDocument::class, $doc);
         $this->assertEquals(42, $doc['answer']);
         $doc['answer'] = 51;
         $this->assertEquals(51, $doc['answer']);
@@ -85,9 +86,11 @@ class MagicDocumentTest extends TestCase
     {
         return [
             [null],
+            [false],
             [''],
             [123],
-            [[123]]
+            [[123]],
+            [new stdClass()]
         ];
     }
 

@@ -32,12 +32,13 @@ class DefaultRepositoryTest extends TestCase
 
     protected $mongo;
     protected $sut;
+    protected $logger;
 
     protected function setUp(): void
     {
         $this->mongo = new Manager('mongodb://localhost:27017');
-        $logger = $this->createStub(LoggerInterface::class);
-        $this->sut = new DefaultRepository($this->mongo, 'trismegiste_toolbox', 'repo_test', $logger);
+        $this->logger = $this->createMock(LoggerInterface::class);
+        $this->sut = new DefaultRepository($this->mongo, 'trismegiste_toolbox', 'repo_test', $this->logger);
         $this->ping($this->mongo, 'trismegiste_toolbox');
     }
 
@@ -167,6 +168,20 @@ class DefaultRepositoryTest extends TestCase
     {
         $this->sut->save([]);
         $this->sut->delete([]);
+    }
+
+    public function testBadDataInCollection()
+    {
+        $bulk = new BulkWrite();
+        $pk = $bulk->insert(['answer' => 42]);
+        $this->mongo->executeBulkWrite('trismegiste_toolbox.repo_test', $bulk);
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('not an object implementing');
+        $this->logger->expects($this->once())
+            ->method('alert');
+
+        $this->sut->load((string) $pk);
     }
 
 }
