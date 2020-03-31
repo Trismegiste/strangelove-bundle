@@ -13,20 +13,29 @@ class MagicDocumentTest extends TestCase
 
     use MongoCheck;
 
+    const dbName = 'trismegiste_toolbox';
+    const collection = 'magic';
+
     protected $sut;
     protected $repository;
 
     protected function setUp(): void
     {
         $mongo = new Manager('mongodb://localhost:27017');
-        $this->ping($mongo, 'trismegiste_toolbox');
-        $this->repository = new DefaultRepository($mongo, 'trismegiste_toolbox', 'magic', new NullLogger());
+        $this->ping($mongo, self::dbName);
+        $this->repository = new DefaultRepository($mongo, self::dbName, self::collection, new NullLogger());
         $this->sut = new MagicDocument();
     }
 
     protected function tearDown(): void
     {
         unset($this->sut);
+    }
+
+    public function testClean()
+    {
+        $iter = $this->repository->search();
+        $this->repository->delete(iterator_to_array($iter));
     }
 
     public function testPrimaryKey()

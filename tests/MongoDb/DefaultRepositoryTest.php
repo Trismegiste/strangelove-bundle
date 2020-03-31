@@ -163,4 +163,10 @@ class DefaultRepositoryTest extends TestCase
         $this->sut->load('123456789012345678901234');
     }
 
+    public function testEmptyArrays()
+    {
+        $this->sut->save([]);
+        $this->sut->delete([]);
+    }
+
 }

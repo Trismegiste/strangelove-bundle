@@ -61,6 +61,10 @@ class DefaultRepository implements Repository
             $documentOrArray = [$documentOrArray];
         }
 
+        if (count($documentOrArray) === 0) {
+            return;
+        }
+
         $bulk = new BulkWrite();
         $this->logger->debug(sprintf("Saving %d document(s)...", count($documentOrArray)));
 
@@ -134,6 +138,10 @@ class DefaultRepository implements Repository
     {
         if (!is_array($documentOrArray)) {
             $documentOrArray = [$documentOrArray];
+        }
+
+        if (count($documentOrArray) === 0) {
+            return;
         }
 
         $bulk = new BulkWrite();
