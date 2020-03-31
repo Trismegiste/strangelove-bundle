@@ -40,7 +40,7 @@ class DefaultRepository implements Repository
         return $this->dbName . '.' . $this->collectionName;
     }
 
-    protected function log(WriteResult $result)
+    protected function logResult(WriteResult $result)
     {
         $this->logger->info(sprintf('Write Bulk Result : %d inserted / %d upserted / %d modified / %d deleted',
                 $result->getInsertedCount(),
@@ -50,7 +50,7 @@ class DefaultRepository implements Repository
         );
         if (count($result->getWriteErrors())) {
             foreach ($result->getWriteErrors() as $error) {
-                $this->logger->alert($error->getMessage());
+                $this->logger->error($error->getMessage());
             }
         }
     }
@@ -62,11 +62,11 @@ class DefaultRepository implements Repository
         }
 
         $bulk = new BulkWrite();
-        $this->logger->info(sprintf("Save %d documents", count($documentOrArray)));
+        $this->logger->debug(sprintf("Saving %d document(s)...", count($documentOrArray)));
 
         foreach ($documentOrArray as $doc) {
             if (!($doc instanceof Root)) {
-                throw new LogicException("Could only insert objects implementing " . Root::class);
+                throw new LogicException("Could only insert/update objects implementing " . Root::class);
             }
 
             if ($doc->isNew()) {
@@ -78,7 +78,7 @@ class DefaultRepository implements Repository
         }
 
         $result = $this->manager->executeBulkWrite($this->getNamespace(), $bulk);
-        $this->log($result);
+        $this->logResult($result);
     }
 
     public function load(string $pk): Root
@@ -92,6 +92,7 @@ class DefaultRepository implements Repository
 
         $found = $rows[0];
         if (!($found instanceof Root)) {
+            $this->logger->alert("There is something wrong in {$this->collectionName} collection since there are documents not implementing " . Root::class);
             throw new LogicException("The record found for $pk is not an object implementing " . Root::class);
         }
 
@@ -136,7 +137,7 @@ class DefaultRepository implements Repository
         }
 
         $bulk = new BulkWrite();
-        $this->logger->info(sprintf("Delete %d documents", count($documentOrArray)));
+        $this->logger->debug(sprintf("Deleting %d document(s)...", count($documentOrArray)));
 
         foreach ($documentOrArray as $doc) {
             if (!($doc instanceof Root)) {
@@ -151,7 +152,7 @@ class DefaultRepository implements Repository
         }
 
         $result = $this->manager->executeBulkWrite($this->getNamespace(), $bulk);
-        $this->log($result);
+        $this->logResult($result);
     }
 
 }

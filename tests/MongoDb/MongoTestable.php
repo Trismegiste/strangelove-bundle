@@ -14,15 +14,21 @@ use PHPUnit\Framework\TestCase;
 /**
  * Description of MongoTestable
  */
-class MongoTestable extends TestCase {
+class MongoTestable extends TestCase
+{
+
+    use MongoCheck;
 
     protected $mongo;
 
-    protected function setUp(): void {
+    protected function setUp(): void
+    {
         $this->mongo = new Manager('mongodb://localhost:27017');
+        $this->ping($this->mongo, 'trismegiste_toolbox');
     }
 
-    protected function resetWriteAndRead(object $obj): object {
+    protected function resetWriteAndRead(object $obj): object
+    {
         $bulk = new BulkWrite(['ordered' => true]);
         $bulk->delete([]);
         $bulk->insert($obj);
@@ -35,7 +41,8 @@ class MongoTestable extends TestCase {
         return $rows[0];
     }
 
-    protected function assertValidMongoId(string $pk) {
+    protected function assertValidMongoId(string $pk)
+    {
         $this->assertRegExp('/^[a-f0-9]{24}$/', $pk);
     }
 

@@ -14,7 +14,7 @@ trait MagicRepository
 
     public function __call($name, $arguments)
     {
-        throw new LogicException('Not yet implemented');
+        throw new \LogicException('Not yet implemented');
     }
 
 }

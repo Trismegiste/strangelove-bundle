@@ -9,8 +9,11 @@ namespace Tests\Toolbox\MongoDb;
 use LogicException;
 use MongoDB\BSON\ObjectIdInterface;
 use MongoDB\Driver\BulkWrite;
+use MongoDB\Driver\Command;
+use MongoDB\Driver\Exception\ConnectionTimeoutException;
 use MongoDB\Driver\Manager;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 use stdClass;
 use Tests\Fixtures\Atom;
@@ -24,7 +27,8 @@ use Trismegiste\Toolbox\MongoDb\DefaultRepository;
 class DefaultRepositoryTest extends TestCase
 {
 
-    use AtomBuilder;
+    use AtomBuilder,
+        MongoCheck;
 
     protected $mongo;
     protected $sut;
@@ -32,8 +36,9 @@ class DefaultRepositoryTest extends TestCase
     protected function setUp(): void
     {
         $this->mongo = new Manager('mongodb://localhost:27017');
-        $logger = $this->createStub(\Psr\Log\LoggerInterface::class);
+        $logger = $this->createStub(LoggerInterface::class);
         $this->sut = new DefaultRepository($this->mongo, 'trismegiste_toolbox', 'repo_test', $logger);
+        $this->ping($this->mongo, 'trismegiste_toolbox');
     }
 
     public function testReset()
