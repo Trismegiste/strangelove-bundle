@@ -74,7 +74,7 @@ class MagicDocument implements ArrayAccess, Root
 
     public function offsetUnset($offset): void
     {
-        if ('_id' !== $offset) {
+        if ('_id' === $offset) {
             throw new LogicException("Cannot unset the primary key on this document");
         }
         unset($this->properties[$offset]);
