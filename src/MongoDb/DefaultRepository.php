@@ -96,7 +96,7 @@ class DefaultRepository implements Repository
 
         $found = $rows[0];
         if (!($found instanceof Root)) {
-            $this->logger->alert("There is something wrong in {$this->collectionName} collection since there are documents not implementing " . Root::class);
+            $this->logger->alert("There is something wrong in {$this->collectionName} collection since document with pk '$pk' is not implementing " . Root::class);
             throw new LogicException("The record found for $pk is not an object implementing " . Root::class);
         }
 
