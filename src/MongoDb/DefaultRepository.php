@@ -12,6 +12,7 @@ use MongoDB\BSON\Regex;
 use MongoDB\Driver\BulkWrite;
 use MongoDB\Driver\Manager;
 use MongoDB\Driver\Query;
+use MongoDB\Driver\WriteResult;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
@@ -39,6 +40,21 @@ class DefaultRepository implements Repository
         return $this->dbName . '.' . $this->collectionName;
     }
 
+    protected function log(WriteResult $result)
+    {
+        $this->logger->info(sprintf('Write Bulk Result : %d inserted / %d upserted / %d modified / %d deleted',
+                $result->getInsertedCount(),
+                $result->getUpsertedCount(),
+                $result->getModifiedCount(),
+                $result->getDeletedCount())
+        );
+        if (count($result->getWriteErrors())) {
+            foreach ($result->getWriteErrors() as $error) {
+                $this->logger->alert($error->getMessage());
+            }
+        }
+    }
+
     public function save($documentOrArray): void
     {
         if (!is_array($documentOrArray)) {
@@ -46,6 +62,7 @@ class DefaultRepository implements Repository
         }
 
         $bulk = new BulkWrite();
+        $this->logger->info(sprintf("Save %d documents", count($documentOrArray)));
 
         foreach ($documentOrArray as $doc) {
             if (!($doc instanceof Root)) {
@@ -61,7 +78,7 @@ class DefaultRepository implements Repository
         }
 
         $result = $this->manager->executeBulkWrite($this->getNamespace(), $bulk);
-        // @todo some managment of $result
+        $this->log($result);
     }
 
     public function load(string $pk): Root
@@ -119,6 +136,7 @@ class DefaultRepository implements Repository
         }
 
         $bulk = new BulkWrite();
+        $this->logger->info(sprintf("Delete %d documents", count($documentOrArray)));
 
         foreach ($documentOrArray as $doc) {
             if (!($doc instanceof Root)) {
@@ -133,7 +151,7 @@ class DefaultRepository implements Repository
         }
 
         $result = $this->manager->executeBulkWrite($this->getNamespace(), $bulk);
-        // @todo some managment of $result
+        $this->log($result);
     }
 
 }
