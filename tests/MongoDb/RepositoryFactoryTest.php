@@ -14,13 +14,29 @@ use Trismegiste\Toolbox\MongoDb\RepositoryFactory;
 /**
  * Description of RepositoryFactoryTest
  */
-class RepositoryFactoryTest extends TestCase {
+class RepositoryFactoryTest extends TestCase
+{
 
-    public function testCreate() {
+    protected $sut;
+
+    protected function setUp(): void
+    {
         $mongo = new Manager('mongodb://localhost:27017');
-        $sut = new RepositoryFactory($mongo, 'trismegiste_toolbox');
+        $this->sut = new RepositoryFactory($mongo, 'trismegiste_toolbox');
+    }
 
-        $this->assertInstanceOf(Repository::class, $sut->create('repo_test'));
+    public function testCreate()
+    {
+        $this->assertInstanceOf(Repository::class, $this->sut->create('repo_test'));
+    }
+
+    public function testPooling()
+    {
+        $repo1 = $this->sut->create('repo_test');
+        $repo1p = $this->sut->create('repo_test');
+        $repo2 = $this->sut->create('repo_test2');
+        $this->assertEquals(spl_object_id($repo1), spl_object_id($repo1p));
+        $this->assertNotEquals(spl_object_id($repo1), spl_object_id($repo2));
     }
 
 }
