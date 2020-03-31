@@ -9,13 +9,14 @@ namespace Trismegiste\Toolbox\MongoDb;
 /**
  * Minimal repository for MongoDb
  * 
- * Convention : 
+ * Convention to extend this interface : 
  *  * Method "searchXXXX" could find zero, one or many record
  *  * Method "findXXXX" could find at least one record, throw exception if otherwise
  *  * Method "findFirstXXXX" could find at least one record and returns de first one or throw exception if otherwise
  *  * Method "findOneXXXX" must find one item or throw exception otherwise
  */
-interface Repository {
+interface Repository
+{
 
     /**
      * Returns an Iterator of Root objects for the query

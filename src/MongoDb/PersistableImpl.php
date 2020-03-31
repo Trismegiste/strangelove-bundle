@@ -9,9 +9,11 @@ namespace Trismegiste\Toolbox\MongoDb;
 /**
  * Implementation of Persistable
  */
-trait PersistableImpl {
+trait PersistableImpl
+{
 
-    public function bsonSerialize() {
+    public function bsonSerialize()
+    {
         $ret = [];
         foreach (get_object_vars($this) as $key => $val) {
             if (('_id' === $key) && is_null($val)) {
@@ -23,7 +25,8 @@ trait PersistableImpl {
         return $ret;
     }
 
-    public function bsonUnserialize(array $data): void {
+    public function bsonUnserialize(array $data): void
+    {
         unset($data['__pclass']);
         foreach ($data as $key => $val) {
             $this->$key = $val;

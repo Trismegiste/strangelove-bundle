@@ -21,26 +21,31 @@ use Trismegiste\Toolbox\MongoDb\DefaultRepository;
 /**
  * Description of DefaultRepositoryTest
  */
-class DefaultRepositoryTest extends TestCase {
+class DefaultRepositoryTest extends TestCase
+{
 
     use AtomBuilder;
 
     protected $mongo;
     protected $sut;
 
-    protected function setUp(): void {
+    protected function setUp(): void
+    {
         $this->mongo = new Manager('mongodb://localhost:27017');
-        $this->sut = new DefaultRepository($this->mongo, 'trismegiste_toolbox', 'repo_test');
+        $logger = $this->createStub(\Psr\Log\LoggerInterface::class);
+        $this->sut = new DefaultRepository($this->mongo, 'trismegiste_toolbox', 'repo_test', $logger);
     }
 
-    public function testReset() {
+    public function testReset()
+    {
         $bulk = new BulkWrite();
         $bulk->delete([]);
         $result = $this->mongo->executeBulkWrite('trismegiste_toolbox.repo_test', $bulk);
         $this->assertTrue($result->isAcknowledged());
     }
 
-    public function testSave() {
+    public function testSave()
+    {
         $doc = $this->createAtom('U235', 92, 235);
         $this->sut->save($doc);
         $this->assertRegExp('/^[a-f0-9]{24}$/', $doc->getPk());
@@ -49,13 +54,15 @@ class DefaultRepositoryTest extends TestCase {
     }
 
     /** @depends testSave */
-    public function testLoad(string $pk) {
+    public function testLoad(string $pk)
+    {
         $doc = $this->sut->load($pk);
         $this->assertInstanceOf(Atom::class, $doc);
         $this->assertEquals(92, $doc->getAtomicNumber());
     }
 
-    public function testSearch() {
+    public function testSearch()
+    {
         $iter = $this->sut->search();
         $result = iterator_to_array($iter);
         $this->assertCount(1, $result);
@@ -65,7 +72,8 @@ class DefaultRepositoryTest extends TestCase {
     }
 
     /** @depends testSearch */
-    public function testUpdate(string $pk) {
+    public function testUpdate(string $pk)
+    {
         $doc = $this->sut->load($pk);
         $this->assertFalse($doc->isIonized());
         $doc->looseElectron();
@@ -78,7 +86,8 @@ class DefaultRepositoryTest extends TestCase {
         $this->assertTrue($reload->isIonized());
     }
 
-    public function testProjection() {
+    public function testProjection()
+    {
         $iter = $this->sut->search([], ['electron']); // we don't care about electrons
         list($atom) = iterator_to_array($iter);
         // the property array 'electron' in Atom was not restored, therefore, it creates an error when you array_push()
@@ -87,7 +96,8 @@ class DefaultRepositoryTest extends TestCase {
         $atom->addElectron(new Lepton('electron'));
     }
 
-    public function dont_testPerformance() {
+    public function dont_testPerformance()
+    {
         $pk = [];
         $stopwatch = microtime(true);
         for ($k = 0; $k < 1000; $k++) {
@@ -106,14 +116,16 @@ class DefaultRepositoryTest extends TestCase {
         var_dump($delta);  // about 1.7 seconds for 1 million simple objects on my cheap laptop on Ubuntu
     }
 
-    public function testAutocompleteSearch() {
+    public function testAutocompleteSearch()
+    {
         $result = $this->sut->searchAutocomplete('name', 'U');
         $this->assertCount(1, $result);
         $this->assertInstanceOf(ObjectIdInterface::class, $result[0]->_id);
         $this->assertEquals('U235', $result[0]->name);
     }
 
-    public function testDelete() {
+    public function testDelete()
+    {
         $result = $this->sut->searchAutocomplete('name', 'U');
         $pk = $result[0]->_id;
         $atom = $this->sut->load($pk);
@@ -122,22 +134,26 @@ class DefaultRepositoryTest extends TestCase {
         $this->assertCount(0, $result);
     }
 
-    public function testDeleteInvalidObject() {
+    public function testDeleteInvalidObject()
+    {
         $this->expectException(LogicException::class);
         $this->sut->delete(new stdClass());
     }
 
-    public function testSaveInvalidObject() {
+    public function testSaveInvalidObject()
+    {
         $this->expectException(LogicException::class);
         $this->sut->save(new stdClass());
     }
 
-    public function testDeleteNonInserted() {
+    public function testDeleteNonInserted()
+    {
         $this->expectException(LogicException::class);
         $this->sut->delete($this->createAtom('H', 1, 1));
     }
 
-    public function testNotFound() {
+    public function testNotFound()
+    {
         $this->expectException(RuntimeException::class);
         $this->sut->load('123456789012345678901234');
     }

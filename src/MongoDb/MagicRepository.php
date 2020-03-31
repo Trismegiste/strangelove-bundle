@@ -9,9 +9,11 @@ namespace Trismegiste\Toolbox\MongoDb;
 /**
  * Magic overload for querying
  */
-trait MagicRepository {
+trait MagicRepository
+{
 
-    public function __call($name, $arguments) {
+    public function __call($name, $arguments)
+    {
         throw new LogicException('Not yet implemented');
     }
 

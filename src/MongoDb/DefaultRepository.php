@@ -12,28 +12,35 @@ use MongoDB\BSON\Regex;
 use MongoDB\Driver\BulkWrite;
 use MongoDB\Driver\Manager;
 use MongoDB\Driver\Query;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 /**
  * Minimal Repository implementation
  */
-class DefaultRepository implements Repository {
+class DefaultRepository implements Repository
+{
 
     protected $manager;
     protected $dbName;
     protected $collectionName;
+    protected $logger;
 
-    public function __construct(Manager $manager, string $dbName, string $collectionName) {
+    public function __construct(Manager $manager, string $dbName, string $collectionName, LoggerInterface $log)
+    {
         $this->manager = $manager;
         $this->dbName = $dbName;
         $this->collectionName = $collectionName;
+        $this->logger = $log;
     }
 
-    protected function getNamespace(): string {
+    protected function getNamespace(): string
+    {
         return $this->dbName . '.' . $this->collectionName;
     }
 
-    public function save($documentOrArray): void {
+    public function save($documentOrArray): void
+    {
         if (!is_array($documentOrArray)) {
             $documentOrArray = [$documentOrArray];
         }
@@ -57,7 +64,8 @@ class DefaultRepository implements Repository {
         // @todo some managment of $result
     }
 
-    public function load(string $pk): Root {
+    public function load(string $pk): Root
+    {
         $cursor = $this->manager->executeQuery($this->getNamespace(), new Query(['_id' => new ObjectId($pk)], ['limit' => 1]));
 
         $rows = iterator_to_array($cursor);
@@ -73,7 +81,8 @@ class DefaultRepository implements Repository {
         return $found;
     }
 
-    public function search(array $filter = [], array $excludedField = [], string $descendingSortField = null): \Iterator {
+    public function search(array $filter = [], array $excludedField = [], string $descendingSortField = null): \Iterator
+    {
         $options = [];
 
         // options preference on projection
@@ -93,16 +102,18 @@ class DefaultRepository implements Repository {
         return new \IteratorIterator($cursor);
     }
 
-    public function searchAutocomplete(string $field, string $startWith, int $limit = 20): array {
+    public function searchAutocomplete(string $field, string $startWith, int $limit = 20): array
+    {
         $cursor = $this->manager->executeQuery($this->getNamespace(), new Query(
-                        [$field => new Regex('^' . $startWith, 'i')],
-                        ['limit' => $limit, 'sort' => [$field => 1], 'projection' => [$field => true]]
+                [$field => new Regex('^' . $startWith, 'i')],
+                ['limit' => $limit, 'sort' => [$field => 1], 'projection' => [$field => true]]
         ));
 
         return $cursor->toArray();
     }
 
-    public function delete($documentOrArray): void {
+    public function delete($documentOrArray): void
+    {
         if (!is_array($documentOrArray)) {
             $documentOrArray = [$documentOrArray];
         }

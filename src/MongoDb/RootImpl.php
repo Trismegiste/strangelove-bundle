@@ -12,24 +12,28 @@ use MongoDB\BSON\ObjectIdInterface;
 /**
  * 
  */
-trait RootImpl {
+trait RootImpl
+{
 
     use PersistableImpl;
 
     protected $_id;
 
-    public function getPk(): ObjectIdInterface {
+    public function getPk(): ObjectIdInterface
+    {
         return $this->_id;
     }
 
-    public function setPk(ObjectIdInterface $pk): void {
+    public function setPk(ObjectIdInterface $pk): void
+    {
         if (!is_null($this->_id)) {
             throw new LogicException('You cannot override an existing PK');
         }
         $this->_id = $pk;
     }
 
-    public function isNew(): bool {
+    public function isNew(): bool
+    {
         return is_null($this->_id);
     }
 
