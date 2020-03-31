@@ -15,9 +15,9 @@ trait MongoCheck
         try {
             $cursor = $cnx->executeCommand($db, $command);
             $response = $cursor->toArray()[0];
-            $this->assertEquals(1, $response->ok, "MongoDb server is NOK");
+            $this->assertEquals(1, $response->ok, "MongoDb server is not ready");
         } catch (ConnectionTimeoutException $e) {
-            $this->markTestSkipped("MongoDb is not responding : did you forget to launch 'sudo service mongod start' ?");
+            $this->markTestSkipped("MongoDb is not responding : did you forget to launch '$ sudo service mongod start' ?");
         }
     }
 
