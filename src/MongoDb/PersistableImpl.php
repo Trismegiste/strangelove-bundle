@@ -19,7 +19,19 @@ trait PersistableImpl
             if (('_id' === $key) && is_null($val)) {
                 continue;
             }
-            $ret[$key] = $val;
+            if (is_object($val)) {
+                switch (get_class($val)) {
+                    case \DateTime::class :
+                        $final = new \MongoDB\BSON\UTCDateTime($val);
+                        break;
+                    default:
+                        $final = $val;
+                }
+            } else {
+                $final = $val;
+            }
+
+            $ret[$key] = $final;
         }
 
         return $ret;
@@ -29,7 +41,22 @@ trait PersistableImpl
     {
         unset($data['__pclass']);
         foreach ($data as $key => $val) {
-            $this->$key = $val;
+            if (is_object($val)) {
+                switch (get_class($val)) {
+                    case \MongoDB\BSON\UTCDateTime::class :
+                        $final = $val->toDateTime();
+                        break;
+                    case \stdClass::class :
+                        $final = (array) $val;
+                        break;
+                    default:
+                        $final = $val;
+                }
+            } else {
+                $final = $val;
+            }
+
+            $this->$key = $final;
         }
     }
 

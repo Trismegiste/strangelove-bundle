@@ -11,15 +11,18 @@ use Tests\Fixtures\Nucleus;
 use Tests\Fixtures\Quark;
 use Tests\Toolbox\MongoDb\MongoTestable;
 
-class PersistableImplTest extends MongoTestable {
+class PersistableImplTest extends MongoTestable
+{
 
-    public function testDefaultWithoutRoot() {
+    public function testDefaultWithoutRoot()
+    {
         $obj = $this->resetWriteAndRead(new Lepton("muon"));
         $this->assertInstanceOf(ObjectId::class, $obj->_id);
         $this->assertEquals('muon', $obj->getName());
     }
 
-    public function testAggregateWithoutRoot() {
+    public function testAggregateWithoutRoot()
+    {
         $doc = new Hadron("proton", [
             new Quark("up", 2 / 3),
             new Quark("up", 2 / 3),
@@ -32,7 +35,8 @@ class PersistableImplTest extends MongoTestable {
         $this->assertValidMongoId($fromDb->_id);
     }
 
-    public function testComplexWithoutRoot() {
+    public function testComplexWithoutRoot()
+    {
         $up = new Quark('up', 2 / 3);
         $down = new Quark('down', -1 / 3);
         $proton = new Hadron('proton', [$up, $up, $down]);
@@ -43,6 +47,16 @@ class PersistableImplTest extends MongoTestable {
         $this->assertEquals(2.0, $fromDb->getElectricCharge());
         $this->assertEquals(2, $fromDb->getAtomicNumber());
         $this->assertValidMongoId($fromDb->_id);
+    }
+
+    public function testMongoType()
+    {
+        $obj = new \Tests\Fixtures\Internal();
+        $obj->_id = new ObjectId();
+        $obj->dob = new DateTime("1973-05-05");
+        $obj->arr = ['data' => 42];
+        $fromDb = $this->resetWriteAndRead($obj);
+        $this->assertEquals($obj, $fromDb);
     }
 
 }
