@@ -17,7 +17,7 @@ in a comprehensive structure into a MongoDB collection.
 
 Every object has to implement one interface use one trait :
 
-``̀ 
+``` 
 class MyEntity implements \MongoDB\BSON\Persistable {
     use \Trismegiste\Toolbox\MongoDb\PersistableImpl;
 }
@@ -26,7 +26,7 @@ class MyEntity implements \MongoDB\BSON\Persistable {
 The "top document" or the "root document", meaning the one who owns the primary key (a.k.a the field "_id" in MongoDB), must
 implement the interface Root and use the trait RootImpl.
 
-``̀ 
+```
 class MyDocument implements \Trismegiste\Toolbox\MongoDb\Root {
     use \Trismegiste\Toolbox\MongoDb\RootImpl;
 }
