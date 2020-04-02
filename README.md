@@ -11,13 +11,26 @@ who know and understand the growth of a model on a schemaless database.
 When I mean "micro", I mean the sum of NCLOC is about one hundred. Therefore it is fast as hell.
 
 ### How
-Since you have atomicity on one document in Document, you have to store complex
+Since you have atomicity on one document in MongoDB, you have to store complex
 tree-ish objects. If you avoid circular references, this ODM store your object
 in a comprehensive structure into a MongoDB collection.
 
-Every object has to implement the interface MongoDB\BSON\Persistable and use the trait Trismegiste\Toolbox\MongoDb\PersistableImpl.
+Every object has to implement one interface use one trait :
+
+``̀ 
+class MyEntity implements \MongoDB\BSON\Persistable {
+    use \Trismegiste\Toolbox\MongoDb\PersistableImpl;
+}
+```
+
 The "top document" or the "root document", meaning the one who owns the primary key (a.k.a the field "_id" in MongoDB), must
-implement the interface Trismegiste\Toolbox\MongoDb\Root and use the trait Trismegiste\Toolbox\MongoDb\RootImpl.
+implement the interface Root and use the trait RootImpl.
+
+``̀ 
+class MyDocument implements \Trismegiste\Toolbox\MongoDb\Root {
+    use \Trismegiste\Toolbox\MongoDb\RootImpl;
+}
+```
 
 And that's it !
 
@@ -39,8 +52,18 @@ This library is full tested with PHPUnit. Simply run 'vendor/bin/phpunit'
 ## Useful functions
 
 * join_paths() : this function glues a set of a chunked paths and prevents "double-slashing" like "/home//mypath//myfile.php".
-No more ugly "__DIR__ . '/../' . 'myfile.php'" inside your source code, it becomes "join_paths(__DIR__, '..', 'myfile.php')" without
-worrying if there is (or not) an ending slash. This function take any number of parameters.
+
+```
+$path = __DIR__ . '/../' . 'myfile.php'; 
+```
+
+becomes :
+
+```
+$path = join_paths(__DIR__, '..', 'myfile.php');
+```
+
+You don't have to worry about trailing slash anymore. This function take any number of parameters.
 
 ## Code coverage
 Code coverage configurations are included in the phpunit.xml.
