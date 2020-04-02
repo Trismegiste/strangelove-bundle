@@ -41,3 +41,7 @@ This library is full tested with PHPUnit. Simply run 'vendor/bin/phpunit'
 * join_paths() : this function glues a set of a chunked paths and prevents "double-slashing" like "/home//mypath//myfile.php".
 No more ugly "__DIR__ . '/../' . 'myfile.php'" inside your source code, it becomes "join_paths(__DIR__, '..', 'myfile.php')" without
 worrying if there is (or not) an ending slash. This function take any number of parameters.
+
+## Code coverage
+Code coverage configurations are included in the phpunit.xml.
+Just run 'phpdbg -qrr vendor/bin/phpunit'. Html results are stored in ./doc/coverage.
