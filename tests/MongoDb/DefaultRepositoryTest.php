@@ -112,14 +112,14 @@ class DefaultRepositoryTest extends TestCase
             $pk[] = $doc->getPk();
         }
         $delta = microtime(true) - $stopwatch;
-        var_dump($delta);  // about 2.4 seconds for 1 million simple objects on my cheap laptop on Ubuntu
+        var_dump($delta);  // about 2.5 seconds for 1 million simple objects on my cheap laptop on Ubuntu
         sleep(1);
         $stopwatch = microtime(true);
         foreach ($pk as $id) {
             $this->sut->load($id);
         }
         $delta = microtime(true) - $stopwatch;
-        var_dump($delta);  // about 1.7 seconds for 1 million simple objects on my cheap laptop on Ubuntu
+        var_dump($delta);  // about 1.8 seconds for 1 million simple objects on my cheap laptop on Ubuntu
     }
 
     public function testAutocompleteSearch()
