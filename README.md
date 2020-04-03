@@ -15,7 +15,7 @@ Since you have atomicity on one document in MongoDB, you have to store complex
 tree-ish objects. If you avoid circular references, this ODM store your object
 in a comprehensive structure into a MongoDB collection.
 
-Every object has to implement one interface use one trait :
+Every object has to implement one interface and use one trait :
 
 ``` 
 class MyEntity implements \MongoDB\BSON\Persistable {
@@ -34,6 +34,9 @@ class MyDocument implements \Trismegiste\Toolbox\MongoDb\Root {
 
 And that's it !
 
+Please read the documentation about BSON serialization in MongoDB to kown
+more : [The MongoDB\BSON\Persistable interface](https://www.php.net/manual/en/class.mongodb-bson-persistable.php)
+
 ### Repositories
 There is a default repository against a collection : DefaultRepository.
 It implements the interface Repository. Read the phpdoc about it.
@@ -43,8 +46,9 @@ A thousand of complex objects that contain about a thousand embedded objects tak
 And it takes about 1.8 seconds to load and hydrate.
 
 ### Internals
-This ODM fully relies on BSON API for MongoDB. Your objects can be anything you want : no constraint on constructor or extending
-some mandatory class. Serialization and unserialization are made in the driver written in C, not PHP, that's why it is so fast.
+This ODM fully relies on BSON API for MongoDB. Your objects can be anything you want : no annotation, 
+no constraint on constructor or extending some mandatory class. 
+Serialization and unserialization are made in the driver written in C, not PHP, that's why it is so fast.
 
 ### Tests
 This library is full tested with PHPUnit. Simply run 'vendor/bin/phpunit'
