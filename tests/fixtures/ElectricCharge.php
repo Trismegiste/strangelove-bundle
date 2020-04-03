@@ -6,11 +6,8 @@
 
 namespace Tests\Fixtures;
 
-/**
- *
- * @author flo
- */
-interface ElectricCharge {
+interface ElectricCharge
+{
 
     public function getElectricCharge(): float;
 }

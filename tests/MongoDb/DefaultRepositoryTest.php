@@ -9,8 +9,6 @@ namespace Tests\Toolbox\MongoDb;
 use LogicException;
 use MongoDB\BSON\ObjectIdInterface;
 use MongoDB\Driver\BulkWrite;
-use MongoDB\Driver\Command;
-use MongoDB\Driver\Exception\ConnectionTimeoutException;
 use MongoDB\Driver\Manager;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
@@ -22,7 +20,7 @@ use Tests\Fixtures\Lepton;
 use Trismegiste\Toolbox\MongoDb\DefaultRepository;
 
 /**
- * Description of DefaultRepositoryTest
+ * DefaultRepositoryTest tests DefaultRepository
  */
 class DefaultRepositoryTest extends TestCase
 {

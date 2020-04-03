@@ -12,7 +12,7 @@ use Trismegiste\Toolbox\MongoDb\Repository;
 use Trismegiste\Toolbox\MongoDb\RepositoryFactory;
 
 /**
- * Description of RepositoryFactoryTest
+ * Test for RepositoryFactory
  */
 class RepositoryFactoryTest extends TestCase
 {
@@ -35,8 +35,8 @@ class RepositoryFactoryTest extends TestCase
         $repo1 = $this->sut->create('repo_test');
         $repo1p = $this->sut->create('repo_test');
         $repo2 = $this->sut->create('repo_test2');
-        $this->assertEquals(spl_object_id($repo1), spl_object_id($repo1p));
-        $this->assertNotEquals(spl_object_id($repo1), spl_object_id($repo2));
+        $this->assertEquals(spl_object_id($repo1), spl_object_id($repo1p)); // this is the same object
+        $this->assertNotEquals(spl_object_id($repo1), spl_object_id($repo2));  // this is not the same object
     }
 
 }

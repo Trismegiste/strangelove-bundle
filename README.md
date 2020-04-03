@@ -1,8 +1,5 @@
 # A set of useful tools
 
-## Iterator
-Currently, there is one Decorator for an Iterator object : ClosureDecorator
-
 ## MongoDb
 A zero-config ODM for MongoDB. It's a micro database layer with automatic mapping.
 It is intended for **advanced users** of MongoDB
@@ -12,7 +9,7 @@ When I mean "micro", I mean the sum of NCLOC is about one hundred. Therefore it 
 
 ### How
 Since you have atomicity on one document in MongoDB, you have to store complex
-tree-ish objects. If you avoid circular references, this ODM store your object
+tree-ish objects. If you avoid circular references, this ODM stores your object
 in a comprehensive structure into a MongoDB collection.
 
 Every object has to implement one interface and use one trait :
@@ -32,7 +29,7 @@ class MyDocument implements \Trismegiste\Toolbox\MongoDb\Root {
 }
 ```
 
-And that's it !
+And that's it ! Arrays and DateTime are preserved.
 
 Please read the documentation about BSON serialization in MongoDB to kown
 more : [The MongoDB\BSON\Persistable interface](https://www.php.net/manual/en/class.mongodb-bson-persistable.php)
@@ -52,6 +49,12 @@ Serialization and unserialization are made in the driver written in C, not PHP, 
 
 ### Tests
 This library is full tested with PHPUnit. Simply run 'vendor/bin/phpunit'
+
+A full functional test can be found in DefaultRepositoryTest.php.
+
+## Iterator
+Currently, there is one Decorator for an Iterator object : ClosureDecorator. It is useful for decorating iterators 
+on cursors created by MongoDB repositories (see above)
 
 ## Useful functions
 

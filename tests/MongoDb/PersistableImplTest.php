@@ -53,7 +53,7 @@ class PersistableImplTest extends MongoTestable
     {
         $obj = new \Tests\Fixtures\Internal();
         $obj->_id = new ObjectId();
-        $obj->dob = new DateTime("1973-05-05");
+        $obj->dob = new DateTime("1993-07-07");
         $obj->arr = ['data' => 42];
         $fromDb = $this->resetWriteAndRead($obj);
         $this->assertEquals($obj, $fromDb);

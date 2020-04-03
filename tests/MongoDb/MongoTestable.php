@@ -12,7 +12,7 @@ use MongoDB\Driver\Query;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Description of MongoTestable
+ * MongoTestable contains common initialization and assertions for MongoDB
  */
 class MongoTestable extends TestCase
 {

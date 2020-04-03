@@ -13,7 +13,7 @@ use MongoDB\Driver\Query;
 use Tests\Fixtures\AtomBuilder;
 
 /**
- * Description of RootImplTest
+ * RootImplTest tests for RootImpl Trait
  */
 class RootImplTest extends MongoTestable {
 

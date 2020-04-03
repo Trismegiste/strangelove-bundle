@@ -7,12 +7,13 @@
 namespace Tests\Fixtures;
 
 /**
- *
- * @author flo
+ * A factory to create a complex object with aggregation
  */
-trait AtomBuilder {
+trait AtomBuilder
+{
 
-    protected function createAtom(string $n, int $z, int $w): Atom {
+    protected function createAtom(string $n, int $z, int $w): Atom
+    {
         $up = new Quark('up', 2 / 3);
         $down = new Quark('down', -1 / 3);
         $proton = new Hadron('proton', [$up, $up, $down]);
