@@ -14,7 +14,7 @@ in a comprehensive structure into a MongoDB collection.
 
 Every object has to implement one interface and use one trait :
 
-``` 
+```php
 class MyEntity implements \MongoDB\BSON\Persistable {
     use \Trismegiste\Toolbox\MongoDb\PersistableImpl;
 }
@@ -23,7 +23,7 @@ class MyEntity implements \MongoDB\BSON\Persistable {
 The "top document" or the "root document", meaning the one who owns the primary key (a.k.a the field "_id" in MongoDB), must
 implement the interface Root and use the trait RootImpl.
 
-```
+```php
 class MyDocument implements \Trismegiste\Toolbox\MongoDb\Root {
     use \Trismegiste\Toolbox\MongoDb\RootImpl;
 }
@@ -31,7 +31,7 @@ class MyDocument implements \Trismegiste\Toolbox\MongoDb\Root {
 
 And that's it ! Arrays and DateTime are preserved.
 
-Please read the documentation about BSON serialization in MongoDB to kown
+Please read the documentation about BSON serialization in MongoDB to know
 more : [The MongoDB\BSON\Persistable interface](https://www.php.net/manual/en/class.mongodb-bson-persistable.php)
 
 ### Repositories
@@ -60,13 +60,13 @@ on cursors created by MongoDB repositories (see above)
 
 * join_paths() : this function glues a set of a chunked paths and prevents "double-slashing" like "/home//mypath//myfile.php".
 
-```
+```php
 $path = __DIR__ . '/../' . 'myfile.php'; 
 ```
 
 becomes :
 
-```
+```php
 $path = join_paths(__DIR__, '..', 'myfile.php');
 ```
 
@@ -74,4 +74,9 @@ You don't have to worry about trailing slash anymore. This function take any num
 
 ## Code coverage
 Code coverage configurations are included in the phpunit.xml.
-Just run 'phpdbg -qrr vendor/bin/phpunit'. Html results are stored in ./doc/coverage.
+Just run :
+```bash
+$ phpdbg -qrr vendor/bin/phpunit
+```
+
+Html results are stored in ./doc/coverage.
