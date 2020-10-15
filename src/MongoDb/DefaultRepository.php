@@ -119,6 +119,7 @@ class DefaultRepository implements Repository
             $options['sort'] = [$descendingSortField => -1];
         }
 
+        $this->logger->debug('Searching in ' . $this->collectionName . ' for ' . json_encode($filter));
         $cursor = $this->manager->executeQuery($this->getNamespace(), new Query($filter, $options));
 
         return new \IteratorIterator($cursor);
