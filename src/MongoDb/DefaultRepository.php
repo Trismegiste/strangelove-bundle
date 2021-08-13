@@ -42,11 +42,12 @@ class DefaultRepository implements Repository
 
     protected function logResult(WriteResult $result)
     {
-        $this->logger->info(sprintf('Write Bulk Result : %d inserted / %d upserted / %d modified / %d deleted',
-                $result->getInsertedCount(),
-                $result->getUpsertedCount(),
-                $result->getModifiedCount(),
-                $result->getDeletedCount())
+        $this->logger->info(sprintf('Write Bulk Result for %s : %d inserted / %d upserted / %d modified / %d deleted',
+                        $this->getNamespace(),
+                        $result->getInsertedCount(),
+                        $result->getUpsertedCount(),
+                        $result->getModifiedCount(),
+                        $result->getDeletedCount())
         );
         if (count($result->getWriteErrors())) {
             foreach ($result->getWriteErrors() as $error) {
@@ -66,7 +67,7 @@ class DefaultRepository implements Repository
         }
 
         $bulk = new BulkWrite();
-        $this->logger->debug(sprintf("Saving %d document(s)...", count($documentOrArray)));
+        $this->logger->debug(sprintf("Saving %d document(s) in %s...", count($documentOrArray), $this->getNamespace()));
 
         foreach ($documentOrArray as $doc) {
             if (!($doc instanceof Root)) {
@@ -128,8 +129,8 @@ class DefaultRepository implements Repository
     public function searchAutocomplete(string $field, string $startWith, int $limit = 20): array
     {
         $cursor = $this->manager->executeQuery($this->getNamespace(), new Query(
-                [$field => new Regex('^' . $startWith, 'i')],
-                ['limit' => $limit, 'sort' => [$field => 1], 'projection' => [$field => true]]
+                        [$field => new Regex('^' . $startWith, 'i')],
+                        ['limit' => $limit, 'sort' => [$field => 1], 'projection' => [$field => true]]
         ));
 
         return $cursor->toArray();
