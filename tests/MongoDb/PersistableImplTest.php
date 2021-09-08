@@ -59,4 +59,14 @@ class PersistableImplTest extends MongoTestable
         $this->assertEquals($obj, $fromDb);
     }
 
+    public function testArray()
+    {
+        $obj = new \Tests\Fixtures\Vector();
+        $obj->setContent(['date' => new \DateTime()]);
+        $fromDb = $this->resetWriteAndRead($obj);
+        $restored = $fromDb->getContent();
+        $this->assertArrayHasKey('date', $restored);
+        $this->assertInstanceOf(DateTime::class, $restored['date']);
+    }
+
 }
