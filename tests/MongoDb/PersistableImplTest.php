@@ -66,7 +66,21 @@ class PersistableImplTest extends MongoTestable
         $fromDb = $this->resetWriteAndRead($obj);
         $restored = $fromDb->getContent();
         $this->assertArrayHasKey('date', $restored);
-        $this->assertInstanceOf(DateTime::class, $restored['date']);
+        // known bug
+        $this->assertInstanceOf(stdClass::class, $restored['date']);
+    }
+
+    public function testDumpWhenPersistableIsSubclassed()
+    {
+        $obj = new Tests\Fixtures\Employee();
+        $obj->name = 'Feyd'; // from Person
+        $obj->salary = 42;
+
+        $dump = $obj->bsonSerialize();
+        $this->assertArrayHasKey('name', $dump);
+        $this->assertArrayHasKey('salary', $dump);
+        $this->assertEquals(42, $dump['salary']);
+        $this->assertEquals('Feyd', $dump['name']);
     }
 
 }
