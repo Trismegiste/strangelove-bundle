@@ -45,6 +45,7 @@ trait PersistableImpl
                 switch (get_class($val)) {
                     case \MongoDB\BSON\UTCDateTime::class :
                         $final = $val->toDateTime();
+                        $final->setTimezone(new \DateTimeZone(date_default_timezone_get()));
                         break;
                     case \stdClass::class :
                         $final = (array) $val;
