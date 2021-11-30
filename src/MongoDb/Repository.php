@@ -50,4 +50,12 @@ interface Repository
      * @param int $limit a limit for result : since we return an array, please don't load the memory
      */
     public function searchAutocomplete(string $field, string $startWith, int $limit = 20);
+
+    /**
+     * Increments a field in a entity (direct access without loading entity from mongodb
+     * @param string $pk if entity primary key
+     * @param string $fieldName the field name to increment
+     * @param int $amount how much to increment
+     */
+    public function incField(string $pk, string $fieldName, int $amount = 1): void;
 }

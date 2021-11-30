@@ -165,4 +165,13 @@ class DefaultRepository implements Repository
         $this->logResult($result);
     }
 
+    public function incField(string $pk, string $fieldName, int $amount = 1): void
+    {
+        $bulk = new BulkWrite();
+        $this->logger->debug("Incrementing $fieldName field in document $pk");
+        $bulk->update(['_id' => new ObjectId($pk)], ['$inc' => [$fieldName => $amount]]);
+        $result = $this->manager->executeBulkWrite($this->getNamespace(), $bulk);
+        $this->logResult($result);
+    }
+
 }

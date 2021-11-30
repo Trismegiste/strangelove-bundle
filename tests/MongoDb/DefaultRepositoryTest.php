@@ -177,9 +177,35 @@ class DefaultRepositoryTest extends TestCase
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('not an object implementing');
         $this->logger->expects($this->once())
-            ->method('alert');
+                ->method('alert');
 
         $this->sut->load((string) $pk);
+    }
+
+    public function testFieldIncrementing()
+    {
+        $obj = new \Tests\Fixtures\Product();
+        $obj->counter = 665;
+        $this->sut->save($obj);
+        $pk = (string) $obj->getPk();
+        unset($obj);
+
+        $this->sut->incField($pk, 'counter');
+        $newObj = $this->sut->load($pk);
+        $this->assertEquals(666, $newObj->counter);
+    }
+
+    public function testFieldIncrementingDeep()
+    {
+        $obj = new \Tests\Fixtures\Vector();
+        $obj->setContent(['counter' => 665]);
+        $this->sut->save($obj);
+        $pk = (string) $obj->getPk();
+        unset($obj);
+
+        $this->sut->incField($pk, 'data.counter');
+        $newObj = $this->sut->load($pk);
+        $this->assertEquals(666, $newObj->getContent()['counter']);
     }
 
 }
