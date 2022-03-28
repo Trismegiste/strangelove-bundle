@@ -57,7 +57,7 @@ class PersistableImplTest extends MongoTestable
     {
         $obj = new Internal();
         $obj->_id = new ObjectId();
-        $obj->dob = new MongoDateTime(new DateTime("1993-07-07"));
+        $obj->dob = new MongoDateTime("1993-07-07");
         $obj->arr = ['data' => 42];
         $fromDb = $this->resetWriteAndRead($obj);
         $this->assertEquals($obj, $fromDb);
@@ -66,7 +66,7 @@ class PersistableImplTest extends MongoTestable
     public function testArray()
     {
         $obj = new Vector();
-        $obj->setContent(['date' => new MongoDateTime(new DateTime())]);
+        $obj->setContent(['date' => new MongoDateTime()]);
         $fromDb = $this->resetWriteAndRead($obj);
         $restored = $fromDb->getContent();
         $this->assertArrayHasKey('date', $restored);

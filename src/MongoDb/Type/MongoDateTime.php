@@ -19,9 +19,13 @@ class MongoDateTime implements Persistable
 
     protected $phpDate;
 
-    public function __construct(DateTime $d)
+    public function __construct($d = 'now')
     {
-        $this->phpDate = clone $d;
+        if ($d instanceof \DateTimeInterface) {
+            $this->phpDate = clone $d;
+        } else {
+            $this->phpDate = new \DateTime($d);
+        }
     }
 
     public function bsonSerialize(): array
