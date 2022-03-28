@@ -37,4 +37,9 @@ trait RootImpl
         return is_null($this->_id);
     }
 
+    public function __clone()
+    {
+        $this->_id = null;
+    }
+
 }

@@ -5,11 +5,15 @@
  */
 
 use MongoDB\BSON\ObjectId;
+use Tests\Fixtures\Employee;
 use Tests\Fixtures\Hadron;
+use Tests\Fixtures\Internal;
 use Tests\Fixtures\Lepton;
 use Tests\Fixtures\Nucleus;
 use Tests\Fixtures\Quark;
+use Tests\Fixtures\Vector;
 use Tests\Toolbox\MongoDb\MongoTestable;
+use Trismegiste\Toolbox\MongoDb\Type\MongoDateTime;
 
 class PersistableImplTest extends MongoTestable
 {
@@ -51,9 +55,9 @@ class PersistableImplTest extends MongoTestable
 
     public function testMongoType()
     {
-        $obj = new \Tests\Fixtures\Internal();
+        $obj = new Internal();
         $obj->_id = new ObjectId();
-        $obj->dob = new DateTime("1993-07-07");
+        $obj->dob = new MongoDateTime(new DateTime("1993-07-07"));
         $obj->arr = ['data' => 42];
         $fromDb = $this->resetWriteAndRead($obj);
         $this->assertEquals($obj, $fromDb);
@@ -61,18 +65,17 @@ class PersistableImplTest extends MongoTestable
 
     public function testArray()
     {
-        $obj = new \Tests\Fixtures\Vector();
-        $obj->setContent(['date' => new \DateTime()]);
+        $obj = new Vector();
+        $obj->setContent(['date' => new MongoDateTime(new DateTime())]);
         $fromDb = $this->resetWriteAndRead($obj);
         $restored = $fromDb->getContent();
         $this->assertArrayHasKey('date', $restored);
-        // known bug
-        $this->assertInstanceOf(stdClass::class, $restored['date']);
+        $this->assertInstanceOf(MongoDateTime::class, $restored['date']);
     }
 
     public function testDumpWhenPersistableIsSubclassed()
     {
-        $obj = new Tests\Fixtures\Employee();
+        $obj = new Employee();
         $obj->name = 'Feyd'; // from Person
         $obj->salary = 42;
 
