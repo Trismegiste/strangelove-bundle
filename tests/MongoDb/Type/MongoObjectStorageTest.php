@@ -56,7 +56,7 @@ class MongoObjectStorageTest extends TestCase
     public function testSerializeCombo()
     {
         $obj = new MongoDateTime('1997-12-25');
-        $this->sut[$obj] = 123;
+        $this->sut[$obj] = 456;
 
         $dump = \MongoDB\BSON\toJSON(\MongoDB\BSON\fromPHP($this->sut));
         $this->assertJson($dump);
@@ -72,7 +72,7 @@ class MongoObjectStorageTest extends TestCase
         $this->assertCount(1, $obj);
         $obj->rewind();
         $this->assertInstanceOf(MongoDateTime::class, $obj->current());
-        $this->assertEquals(123, $obj->getInfo());
+        $this->assertEquals(456, $obj->getInfo());
         $this->assertEquals(1997, $obj->current()->format('Y'));
     }
 
