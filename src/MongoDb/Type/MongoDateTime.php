@@ -6,8 +6,6 @@
 
 namespace Trismegiste\Toolbox\MongoDb\Type;
 
-use DateTime;
-use DateTimeZone;
 use MongoDB\BSON\Persistable;
 use MongoDB\BSON\UTCDateTime;
 
@@ -33,19 +31,29 @@ class MongoDateTime implements Persistable
         return [
             'utc' => new UTCDateTime($this->phpDate),
             'tz' => $this->phpDate->getTimezone()->getName(),
-            'atom' => $this->phpDate->format(DateTime::ATOM)   // sometime this field is simpler for query
+            'atom' => $this->phpDate->format(\DateTime::ATOM)   // sometime this field is simpler for query
         ];
     }
 
     public function bsonUnserialize(array $data): void
     {
         $this->phpDate = $data['utc']->toDateTime();
-        $this->phpDate->setTimezone(new DateTimeZone($data['tz']));
+        $this->phpDate->setTimezone(new \DateTimeZone($data['tz']));
     }
 
-    public function getDateTime(): DateTime
+    public function getDateTime(): \DateTime
     {
         return $this->phpDate;
+    }
+
+    public function format(string $format): string
+    {
+        return $this->phpDate->format($format);
+    }
+
+    public function __toString(): string
+    {
+        return $this->phpDate->format(\DateTime::ATOM);
     }
 
 }
