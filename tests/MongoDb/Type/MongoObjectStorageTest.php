@@ -72,8 +72,8 @@ class MongoObjectStorageTest extends TestCase
         $this->assertCount(1, $obj);
         $obj->rewind();
         $this->assertInstanceOf(MongoDateTime::class, $obj->current());
+        $this->assertEquals('1997-12-25', $obj->current()->format('Y-m-d'));
         $this->assertEquals(456, $obj->getInfo());
-        $this->assertEquals(1997, $obj->current()->format('Y'));
     }
 
 }
