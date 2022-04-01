@@ -12,7 +12,7 @@ use MongoDB\BSON\Persistable;
 use MongoDB\BSON\UTCDateTime;
 
 /**
- * DateTime wrapper
+ * DateTime wrapper since we cannot inherit from DateTime or implement the interface DateTimeInterface
  */
 class MongoDateTime implements Persistable
 {
@@ -33,7 +33,7 @@ class MongoDateTime implements Persistable
         return [
             'utc' => new UTCDateTime($this->phpDate),
             'tz' => $this->phpDate->getTimezone()->getName(),
-            'atom' => $this->phpDate->format(DateTime::ATOM)
+            'atom' => $this->phpDate->format(DateTime::ATOM)   // sometime this field is simpler for query
         ];
     }
 

@@ -28,6 +28,7 @@ trait PersistableImpl
         unset($data['__pclass']);
 
         foreach ($data as $key => $val) {
+            // forced conversion of stdClass into arrays
             if (is_object($val) && get_class($val) === 'stdClass') {
                 $this->$key = (array) $val;
             } else {
