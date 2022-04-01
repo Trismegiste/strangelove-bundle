@@ -17,12 +17,12 @@ class MongoDateTime implements Persistable
 
     protected $phpDate;
 
-    public function __construct($d = 'now')
+    public function __construct($d = 'now', $timezone = null)
     {
         if ($d instanceof \DateTimeInterface) {
             $this->phpDate = clone $d;
         } else {
-            $this->phpDate = new \DateTime($d);
+            $this->phpDate = new \DateTime($d, $timezone);
         }
     }
 
