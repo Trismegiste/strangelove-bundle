@@ -4,7 +4,7 @@ use Symfony\Component\Form\Test\TypeTestCase;
 use Trismegiste\Toolbox\MongoDb\Form\MongoDateType;
 use Trismegiste\Toolbox\MongoDb\Type\MongoDateTime;
 
-class DateMongoTransformerTest extends TypeTestCase
+class MongoDateTypeTest extends TypeTestCase
 {
 
     public function testObjectWithNull()
