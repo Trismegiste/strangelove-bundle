@@ -1,21 +1,21 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Trismegiste\Toolbox\MongoDb\Type\MongoDateTime;
-use Trismegiste\Toolbox\MongoDb\Type\MongoObjectStorage;
+use Trismegiste\Toolbox\MongoDb\Type\BsonDateTime;
+use Trismegiste\Toolbox\MongoDb\Type\BsonObjectStorage;
 
 /*
  * Toolbox
  */
 
-class MongoObjectStorageTest extends TestCase
+class BsonObjectStorageTest extends TestCase
 {
 
     protected $sut;
 
     protected function setUp(): void
     {
-        $this->sut = new MongoObjectStorage();
+        $this->sut = new BsonObjectStorage();
     }
 
     public function testEmpty()
@@ -55,7 +55,7 @@ class MongoObjectStorageTest extends TestCase
 
     public function testSerializeCombo()
     {
-        $obj = new MongoDateTime('1997-12-25');
+        $obj = new BsonDateTime('1997-12-25');
         $this->sut[$obj] = 456;
 
         $dump = \MongoDB\BSON\toJSON(\MongoDB\BSON\fromPHP($this->sut));
@@ -71,7 +71,7 @@ class MongoObjectStorageTest extends TestCase
 
         $this->assertCount(1, $obj);
         $obj->rewind();
-        $this->assertInstanceOf(MongoDateTime::class, $obj->current());
+        $this->assertInstanceOf(BsonDateTime::class, $obj->current());
         $this->assertEquals('1997-12-25', $obj->current()->format('Y-m-d'));
         $this->assertEquals(456, $obj->getInfo());
     }

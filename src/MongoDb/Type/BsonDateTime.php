@@ -12,7 +12,7 @@ use MongoDB\BSON\UTCDateTime;
 /**
  * DateTime wrapper since we cannot inherit from DateTime or implement the interface DateTimeInterface
  */
-class MongoDateTime implements Persistable
+class BsonDateTime implements Persistable
 {
 
     protected $phpDate;

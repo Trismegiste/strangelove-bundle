@@ -13,6 +13,7 @@ use Tests\Fixtures\Nucleus;
 use Tests\Fixtures\Quark;
 use Tests\Fixtures\Vector;
 use Tests\Toolbox\MongoDb\MongoTestable;
+use Trismegiste\Toolbox\MongoDb\Type\BsonDateTime;
 use Trismegiste\Toolbox\MongoDb\Type\MongoDateTime;
 
 class PersistableImplTest extends MongoTestable
@@ -57,7 +58,7 @@ class PersistableImplTest extends MongoTestable
     {
         $obj = new Internal();
         $obj->_id = new ObjectId();
-        $obj->dob = new MongoDateTime("1993-07-07");
+        $obj->dob = new BsonDateTime("1993-07-07");
         $obj->arr = ['data' => 42];
         $fromDb = $this->resetWriteAndRead($obj);
         $this->assertEquals($obj, $fromDb);
@@ -66,11 +67,11 @@ class PersistableImplTest extends MongoTestable
     public function testArray()
     {
         $obj = new Vector();
-        $obj->setContent(['date' => new MongoDateTime()]);
+        $obj->setContent(['date' => new BsonDateTime()]);
         $fromDb = $this->resetWriteAndRead($obj);
         $restored = $fromDb->getContent();
         $this->assertArrayHasKey('date', $restored);
-        $this->assertInstanceOf(MongoDateTime::class, $restored['date']);
+        $this->assertInstanceOf(BsonDateTime::class, $restored['date']);
     }
 
     public function testDumpWhenPersistableIsSubclassed()

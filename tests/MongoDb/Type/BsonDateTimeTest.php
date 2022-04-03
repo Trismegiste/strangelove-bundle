@@ -4,14 +4,14 @@
  * Toolbox
  */
 
-class MongoDateTimeTest extends \PHPUnit\Framework\TestCase
+class BsonDateTimeTest extends \PHPUnit\Framework\TestCase
 {
 
     protected $sut;
 
     protected function setUp(): void
     {
-        $this->sut = new Trismegiste\Toolbox\MongoDb\Type\MongoDateTime('2022-04-01 12:34:56', new DateTimeZone('Asia/Tokyo'));
+        $this->sut = new Trismegiste\Toolbox\MongoDb\Type\BsonDateTime('2022-04-01 12:34:56', new DateTimeZone('Asia/Tokyo'));
     }
 
     public function testSerialize()

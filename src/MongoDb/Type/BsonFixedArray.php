@@ -9,7 +9,7 @@ namespace Trismegiste\Toolbox\MongoDb\Type;
 /**
  * SplFixedArray for native MongoDb
  */
-class MongoFixedArray extends \SplFixedArray implements \MongoDB\BSON\Persistable
+class BsonFixedArray extends \SplFixedArray implements \MongoDB\BSON\Persistable
 {
 
     public function bsonSerialize(): array

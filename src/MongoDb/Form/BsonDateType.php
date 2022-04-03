@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * 
  */
-class MongoDateType extends AbstractType
+class BsonDateType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options)

@@ -4,14 +4,14 @@
  * Toolbox
  */
 
-class MongoFixedArrayTest extends \PHPUnit\Framework\TestCase
+class BsonFixedArrayTest extends \PHPUnit\Framework\TestCase
 {
 
     protected $sut;
 
     protected function setUp(): void
     {
-        $this->sut = new \Trismegiste\Toolbox\MongoDb\Type\MongoFixedArray();
+        $this->sut = new \Trismegiste\Toolbox\MongoDb\Type\BsonFixedArray();
     }
 
     public function testEmpty()

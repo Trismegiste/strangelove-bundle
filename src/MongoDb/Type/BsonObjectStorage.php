@@ -9,7 +9,7 @@ namespace Trismegiste\Toolbox\MongoDb\Type;
 /**
  * SplObjectStorage replacement
  */
-class MongoObjectStorage extends \SplObjectStorage implements \MongoDB\BSON\Persistable
+class BsonObjectStorage extends \SplObjectStorage implements \MongoDB\BSON\Persistable
 {
 
     public function bsonSerialize(): array
