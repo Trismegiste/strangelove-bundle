@@ -52,7 +52,7 @@ class DefaultRepositoryTest extends TestCase
     {
         $doc = $this->createAtom('U235', 92, 235);
         $this->sut->save($doc);
-        $this->assertRegExp('/^[a-f0-9]{24}$/', $doc->getPk());
+        $this->assertMatchesRegularExpression('/^[a-f0-9]{24}$/', $doc->getPk());
 
         return (string) $doc->getPk();
     }

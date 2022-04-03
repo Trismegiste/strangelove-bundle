@@ -1,3 +1,4 @@
 /vendor/
 /nbproject/
 /doc/coverage/
+.phpunit.result.cache

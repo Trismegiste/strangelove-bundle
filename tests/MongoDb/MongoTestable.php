@@ -17,6 +17,8 @@ use PHPUnit\Framework\TestCase;
 class MongoTestable extends TestCase
 {
 
+    const collection = 'trismegiste_toolbox.collection';
+
     use MongoCheck;
 
     protected $mongo;
@@ -32,8 +34,8 @@ class MongoTestable extends TestCase
         $bulk = new BulkWrite(['ordered' => true]);
         $bulk->delete([]);
         $bulk->insert($obj);
-        $this->mongo->executeBulkWrite('trismegiste_toolbox.collection', $bulk);
-        $cursor = $this->mongo->executeQuery('trismegiste_toolbox.collection', new Query([]));
+        $this->mongo->executeBulkWrite(self::collection, $bulk);
+        $cursor = $this->mongo->executeQuery(self::collection, new Query([]));
         $rows = iterator_to_array($cursor);
         $this->assertCount(1, $rows);
         $this->assertInstanceOf(get_class($obj), $rows[0]);
@@ -43,7 +45,7 @@ class MongoTestable extends TestCase
 
     protected function assertValidMongoId(string $pk)
     {
-        $this->assertRegExp('/^[a-f0-9]{24}$/', $pk);
+        $this->assertMatchesRegularExpression('/^[a-f0-9]{24}$/', $pk);
     }
 
 }
