@@ -37,7 +37,7 @@ class MyDocument implements \Trismegiste\Toolbox\MongoDb\Root {
 * Don't use DateTime in your model, use BsonDateTime, you have a nice AbstractType for replacing Symfony DateType
 that converts DateTime into BsonDateTime
 * Don't use SplObjectStorage in your model, use BsonObjectStorage
-* Don't use SplObjectStorage in your model, use BsonObjectStorage
+* Don't use SplFixedArray in your model, use BsonFixedArray
 
 Please read the documentation about BSON serialization in MongoDB to know
 more : [The MongoDB\BSON\Persistable interface](https://www.php.net/manual/en/class.mongodb-bson-persistable.php)
