@@ -5,10 +5,10 @@ namespace Tests\Fixtures;
 /**
  * Fixtures
  */
-class Vector implements \Trismegiste\Toolbox\MongoDb\Root
+class Vector implements \Trismegiste\Strangelove\MongoDb\Root
 {
 
-    use \Trismegiste\Toolbox\MongoDb\RootImpl;
+    use \Trismegiste\Strangelove\MongoDb\RootImpl;
 
     protected $data;
 

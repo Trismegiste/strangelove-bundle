@@ -2,7 +2,7 @@
 
 ## How I Learned to Stop Worrying about ORM and Love MongoDb BSON
 
-A symfony library for those who wants to stop chasing after the mythical object-database, or its closest approximation a.k.a ORM.
+A symfony library for stopping the chase after the mythical object-database, or its closest approximation a.k.a ORM.
 
 ## MongoDb
 A zero-config ODM for MongoDB. It's a micro database layer with automatic mapping.

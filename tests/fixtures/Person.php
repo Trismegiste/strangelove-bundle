@@ -3,7 +3,7 @@
 namespace Tests\Fixtures;
 
 use MongoDB\BSON\Persistable;
-use Trismegiste\Toolbox\MongoDb\PersistableImpl;
+use Trismegiste\Strangelove\MongoDb\PersistableImpl;
 
 class Person implements Persistable
 {

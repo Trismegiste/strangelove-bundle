@@ -1,10 +1,10 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
-namespace Trismegiste\Toolbox\MongoDb;
+namespace Trismegiste\Strangelove\MongoDb;
 
 /**
  * Minimal repository interface for MongoDb
@@ -24,7 +24,7 @@ interface Repository
     /**
      * Load ONE object stored in the collection by its PK
      * @param string $pk the primary key (a.k.a field "_id")
-     * @return \Trismegiste\Toolbox\MongoDb\Root
+     * @return \Trismegiste\Strangelove\MongoDb\Root
      */
     public function load(string $pk): Root;
 

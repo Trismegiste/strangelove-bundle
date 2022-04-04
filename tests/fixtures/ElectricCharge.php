@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
 namespace Tests\Fixtures;

@@ -1,10 +1,10 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
-namespace Tests\Toolbox\MongoDb;
+namespace Tests\Strangelove\MongoDb;
 
 use LogicException;
 use MongoDB\BSON\ObjectIdInterface;
@@ -17,7 +17,7 @@ use stdClass;
 use Tests\Fixtures\Atom;
 use Tests\Fixtures\AtomBuilder;
 use Tests\Fixtures\Lepton;
-use Trismegiste\Toolbox\MongoDb\DefaultRepository;
+use Trismegiste\Strangelove\MongoDb\DefaultRepository;
 
 /**
  * DefaultRepositoryTest tests DefaultRepository

@@ -1,10 +1,10 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
-namespace Trismegiste\Toolbox\MongoDb\Form;
+namespace Trismegiste\Strangelove\MongoDb\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;

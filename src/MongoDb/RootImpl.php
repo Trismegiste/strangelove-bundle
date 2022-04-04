@@ -1,10 +1,10 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
-namespace Trismegiste\Toolbox\MongoDb;
+namespace Trismegiste\Strangelove\MongoDb;
 
 use LogicException;
 use MongoDB\BSON\ObjectIdInterface;

@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
 use MongoDB\BSON\ObjectId;
@@ -12,9 +12,9 @@ use Tests\Fixtures\Lepton;
 use Tests\Fixtures\Nucleus;
 use Tests\Fixtures\Quark;
 use Tests\Fixtures\Vector;
-use Tests\Toolbox\MongoDb\MongoTestable;
-use Trismegiste\Toolbox\MongoDb\Type\BsonDateTime;
-use Trismegiste\Toolbox\MongoDb\Type\MongoDateTime;
+use Tests\Strangelove\MongoDb\MongoTestable;
+use Trismegiste\Strangelove\MongoDb\Type\BsonDateTime;
+use Trismegiste\Strangelove\MongoDb\Type\MongoDateTime;
 
 class PersistableImplTest extends MongoTestable
 {

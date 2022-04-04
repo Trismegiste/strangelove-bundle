@@ -1,13 +1,13 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
-namespace Trismegiste\Toolbox\MongoDb\Form;
+namespace Trismegiste\Strangelove\MongoDb\Form;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Trismegiste\Toolbox\MongoDb\Type\BsonDateTime;
+use Trismegiste\Strangelove\MongoDb\Type\BsonDateTime;
 
 /**
  * Transform a PHP DateTime into MongoDateTime

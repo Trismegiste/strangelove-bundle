@@ -1,10 +1,10 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
-namespace Trismegiste\Toolbox\Iterator;
+namespace Trismegiste\Strangelove\Iterator;
 
 use Iterator;
 

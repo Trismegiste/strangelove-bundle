@@ -2,8 +2,8 @@
 
 namespace Tests\Fixtures;
 
-use Trismegiste\Toolbox\MongoDb\Root;
-use Trismegiste\Toolbox\MongoDb\RootImpl;
+use Trismegiste\Strangelove\MongoDb\Root;
+use Trismegiste\Strangelove\MongoDb\RootImpl;
 
 /**
  * Fixtures

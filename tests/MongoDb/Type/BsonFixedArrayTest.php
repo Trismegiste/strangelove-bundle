@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
 class BsonFixedArrayTest extends \PHPUnit\Framework\TestCase
@@ -11,7 +11,7 @@ class BsonFixedArrayTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->sut = new \Trismegiste\Toolbox\MongoDb\Type\BsonFixedArray();
+        $this->sut = new \Trismegiste\Strangelove\MongoDb\Type\BsonFixedArray();
     }
 
     public function testEmpty()

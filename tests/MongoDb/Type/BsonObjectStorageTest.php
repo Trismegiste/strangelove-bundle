@@ -1,11 +1,11 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Trismegiste\Toolbox\MongoDb\Type\BsonDateTime;
-use Trismegiste\Toolbox\MongoDb\Type\BsonObjectStorage;
+use Trismegiste\Strangelove\MongoDb\Type\BsonDateTime;
+use Trismegiste\Strangelove\MongoDb\Type\BsonObjectStorage;
 
 /*
- * Toolbox
+ * Strangelove
  */
 
 class BsonObjectStorageTest extends TestCase

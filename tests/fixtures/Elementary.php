@@ -1,13 +1,13 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
 namespace Tests\Fixtures;
 
 use MongoDB\BSON\Persistable;
-use Trismegiste\Toolbox\MongoDb\PersistableImpl;
+use Trismegiste\Strangelove\MongoDb\PersistableImpl;
 
 abstract class Elementary implements Persistable {
 

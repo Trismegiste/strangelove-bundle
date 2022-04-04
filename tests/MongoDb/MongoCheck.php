@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Toolbox\MongoDb;
+namespace Tests\Strangelove\MongoDb;
 
 use MongoDB\Driver\Command;
 use MongoDB\Driver\Exception\ConnectionTimeoutException;

@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Trismegiste\Toolbox\Iterator\ClosureDecorator;
+use Trismegiste\Strangelove\Iterator\ClosureDecorator;
 
 class ClosureDecoratorTest extends TestCase {
 

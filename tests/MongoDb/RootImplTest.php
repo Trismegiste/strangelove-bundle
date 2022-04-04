@@ -1,10 +1,10 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
-namespace Tests\Toolbox\MongoDb;
+namespace Tests\Strangelove\MongoDb;
 
 use LogicException;
 use MongoDB\BSON\ObjectId;

@@ -1,15 +1,15 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
-namespace Tests\Toolbox\MongoDb;
+namespace Tests\Strangelove\MongoDb;
 
 use MongoDB\Driver\Manager;
 use PHPUnit\Framework\TestCase;
-use Trismegiste\Toolbox\MongoDb\Repository;
-use Trismegiste\Toolbox\MongoDb\RepositoryFactory;
+use Trismegiste\Strangelove\MongoDb\Repository;
+use Trismegiste\Strangelove\MongoDb\RepositoryFactory;
 
 /**
  * Test for RepositoryFactory

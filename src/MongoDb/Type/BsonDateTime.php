@@ -1,10 +1,10 @@
 <?php
 
 /*
- * Toolbox
+ * Strangelove
  */
 
-namespace Trismegiste\Toolbox\MongoDb\Type;
+namespace Trismegiste\Strangelove\MongoDb\Type;
 
 use MongoDB\BSON\Persistable;
 use MongoDB\BSON\UTCDateTime;
