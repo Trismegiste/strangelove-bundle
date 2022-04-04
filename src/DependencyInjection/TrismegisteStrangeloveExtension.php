@@ -20,7 +20,7 @@ class TrismegisteStrangeloveExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        var_dump($config);
+        $container->set('mongodb', new \MongoDB\Driver\Manager($config['mongodb']['url']));
     }
 
     public function getAlias()
