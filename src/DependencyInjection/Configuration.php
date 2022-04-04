@@ -17,7 +17,7 @@ class Configuration implements ConfigurationInterface
 
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder('trismegiste_strangelove');
+        $treeBuilder = new TreeBuilder('strangelove');
 
         $treeBuilder->getRootNode()
                 ->children()
@@ -26,7 +26,10 @@ class Configuration implements ConfigurationInterface
                             ->scalarNode('url')
                                 ->defaultValue('mongodb://localhost:27017')
                             ->end()
-                            ->scalarNode('dbname')->end()
+                            ->scalarNode('dbname')
+                                ->isRequired()
+                                ->cannotBeEmpty()
+                            ->end()
                         ->end()
                     ->end()
                 ->end()

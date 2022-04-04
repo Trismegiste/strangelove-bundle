@@ -19,8 +19,13 @@ class TrismegisteStrangeloveExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        
+
         var_dump($config);
+    }
+
+    public function getAlias()
+    {
+        return 'strangelove';
     }
 
 }

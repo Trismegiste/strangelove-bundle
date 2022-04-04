@@ -17,7 +17,9 @@
         "php": ">7.3",
         "ext-mongodb": ">1.7",
         "psr/log": "^1.1",
-        "symfony/form": "^5.4"
+        "symfony/form": "^5.4",
+        "symfony/config": "5.4",
+        "symfony/http-kernel": "5.4"
     },
     "autoload": {
         "psr-4": {
