@@ -10,7 +10,8 @@ use MongoDB\BSON\Persistable;
 use MongoDB\BSON\UTCDateTime;
 
 /**
- * DateTime wrapper since we cannot inherit from DateTime or implement the interface DateTimeInterface
+ * A DateTime wrapper with BSON capabilities since we cannot inherit from DateTime nor implement the interface DateTimeInterface.
+ * This is duck-typing due to limitation of PHP
  */
 class BsonDateTime implements Persistable
 {

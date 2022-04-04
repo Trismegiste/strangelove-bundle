@@ -7,7 +7,7 @@
 namespace Trismegiste\Strangelove\MongoDb\Type;
 
 /**
- * SplFixedArray for native MongoDb
+ * This is a SplFixedArray with BSON capabilities
  */
 class BsonFixedArray extends \SplFixedArray implements \MongoDB\BSON\Persistable
 {

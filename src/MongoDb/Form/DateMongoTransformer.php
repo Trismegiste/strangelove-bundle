@@ -10,7 +10,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 use Trismegiste\Strangelove\MongoDb\Type\BsonDateTime;
 
 /**
- * Transform a PHP DateTime into MongoDateTime
+ * Transform a PHP DateTime into BsonDateTime
  */
 class DateMongoTransformer implements DataTransformerInterface
 {

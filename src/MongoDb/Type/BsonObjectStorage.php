@@ -7,7 +7,7 @@
 namespace Trismegiste\Strangelove\MongoDb\Type;
 
 /**
- * SplObjectStorage replacement
+ * This is a SplObjectStorage with BSON capabilities
  */
 class BsonObjectStorage extends \SplObjectStorage implements \MongoDB\BSON\Persistable
 {

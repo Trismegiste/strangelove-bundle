@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * 
+ * Widget for replacing DateType
  */
 class BsonDateType extends AbstractType
 {
