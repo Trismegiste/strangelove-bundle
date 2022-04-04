@@ -6,10 +6,12 @@
 
 namespace Trismegiste\Strangelove;
 
+use Symfony\Component\HttpKernel\Bundle\Bundle;
+
 /**
  * The bundle
  */
-class TrismegisteStrangeloveBundle
+class TrismegisteStrangeloveBundle extends Bundle
 {
     
 }
