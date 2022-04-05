@@ -13,10 +13,5 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
  */
 class TrismegisteStrangeloveBundle extends Bundle
 {
-
-    public function getContainerExtension()
-    {
-        return new DependencyInjection\TrismegisteStrangeloveExtension();
-    }
-
+    
 }

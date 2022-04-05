@@ -1,5 +1,5 @@
 {
-    "name": "trismegiste/strangelove",
+    "name": "trismegiste/strangelove-bundle",
     "description": "How I Learned to Stop Worrying about ORM and Love MongoDb BSON",
     "type": "library",
     "require-dev": {
