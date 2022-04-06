@@ -6,23 +6,27 @@
 
 namespace Trismegiste\Strangelove\DependencyInjection;
 
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
  * Config extension
  */
-class TrismegisteStrangeloveExtension extends Extension
+class StrangeloveExtension extends Extension
 {
 
     public function load(array $configs, ContainerBuilder $container)
     {
-        var_dump($configs);
+        $loader = new YamlFileLoader($container, new FileLocator(dirname(__DIR__) . '/../config'));
+        $loader->load('services.yaml');
+
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        var_dump($config);
-
-     //   $container->set('mongodb', new \MongoDB\Driver\Manager($config['mongodb']['url']));
+        
+        $definition = $container->getDefinition('mongodb');
+        $definition->replaceArgument(0, $config['mongodb']['url']);
     }
 
 }

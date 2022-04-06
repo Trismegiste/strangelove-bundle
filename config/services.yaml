@@ -1,0 +1,5 @@
+services:
+    mongodb:
+        class: \MongoDB\Driver\Manager
+        arguments:
+            - 'url_to_mongodb_server'
