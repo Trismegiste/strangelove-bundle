@@ -10,6 +10,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Trismegiste\Strangelove\MongoDb\RepositoryFactory;
 
 /**
  * Config extension
@@ -24,9 +25,12 @@ class StrangeloveExtension extends Extension
 
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
-        
+
         $definition = $container->getDefinition('mongodb');
         $definition->replaceArgument(0, $config['mongodb']['url']);
+
+        $definition = $container->getDefinition('mongodb.factory');
+        $definition->replaceArgument('$dbName', $config['mongodb']['dbname']);
     }
 
 }

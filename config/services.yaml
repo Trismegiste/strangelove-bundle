@@ -3,3 +3,8 @@ services:
         class: \MongoDB\Driver\Manager
         arguments:
             - 'url_to_mongodb_server'
+
+    mongodb.factory:
+        class: \Trismegiste\Strangelove\MongoDb\RepositoryFactory
+        arguments:
+            $dbName: 'noname'

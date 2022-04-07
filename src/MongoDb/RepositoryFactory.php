@@ -32,7 +32,7 @@ class RepositoryFactory
 
     public function create(string $collectionName): Repository
     {
-        if (!array_key_exists($collectionName, $this->collection)) {
+        if (!key_exists($collectionName, $this->collection)) {
             $this->collection[$collectionName] = new DefaultRepository($this->manager, $this->dbName, $collectionName, $this->logger);
         }
 
