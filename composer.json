@@ -3,8 +3,7 @@
     "description": "How I Learned to Stop Worrying about ORM and Love MongoDb BSON",
     "type": "library",
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
-        "composer/composer": "^1.0.2|^2.0"
+        "phpunit/phpunit": "^9.5"
     },
     "license": "MIT",
     "authors": [
@@ -21,8 +20,7 @@
         "symfony/form": "^5.4",
         "symfony/config": "^5.4",
         "symfony/http-kernel": "^5.4",
-        "symfony/dependency-injection": "^5.4",
-        "symfony/flex": "1.*"
+        "symfony/dependency-injection": "^5.4"
     },
     "autoload": {
         "psr-4": {
@@ -35,8 +33,5 @@
             "Tests\\Fixtures\\": "tests/fixtures/",
             "Tests\\Strangelove\\": "tests/"
         }
-    },
-    "scripts": {
-        "post-update-cmd": "Trismegiste\\Strangelove\\Composer\\Hook::postInstallCmd"
     }
 }
