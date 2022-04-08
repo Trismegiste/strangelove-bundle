@@ -8,5 +8,5 @@ services:
         class: \Trismegiste\Strangelove\MongoDb\RepositoryFactory
         arguments:
             $manager: '@mongodb'
-            $dbName: 'noname'
+            $dbName: 'delete_this_database_if_you_see_it'
             $log: '@logger'
