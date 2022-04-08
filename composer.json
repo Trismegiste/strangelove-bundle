@@ -37,6 +37,6 @@
         }
     },
     "scripts": {
-        "post-install-cmd": "Trismegiste\\Strangelove\\Composer\\Hook::postInstallCmd"
+        "post-update-cmd": "Trismegiste\\Strangelove\\Composer\\Hook::postInstallCmd"
     }
 }
