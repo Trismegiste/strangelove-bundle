@@ -23,7 +23,7 @@ class SelfRecipe extends \Symfony\Flex\Recipe
     {
         return [
             'bundles' => [
-                'Yolo' => ['all']
+                'Trismegiste\Strangelove\TrismegisteStrangeloveBundle' => ['all']
             ]
         ];
     }

@@ -19,6 +19,7 @@ class Hook
 
     public static function postInstallCmd(Event $event)
     {
+        echo "TOTO\n";
         $configurator = new Configurator($event->getComposer(), $event->getIO(), new Options());
 
         $recipe = new SelfRecipe();
