@@ -1,16 +1,39 @@
 # Strangelove
 
-## How I Learned to Stop Worrying about ORM and Love MongoDb BSON
+![How I Learned to Stop Worrying about ORM and Love MongoDb BSON](https://github.com/Trismegiste/toolbox/blob/bundle/docs/strangelove-title.png)
 
-A symfony library for stopping the chase after the mythical object-database, or its closest approximation a.k.a ORM.
+A symfony bundle for stopping the chase after the mythical object-database, or its fake approximation a.k.a ORM.
 
 ## MongoDb
-A zero-config ODM for MongoDB. It's a micro database layer with automatic mapping.
+A almost-zero-config Object Data Mapper for MongoDB. It's a micro database layer with 
+automatic mapping that rely on BSON types.
 It is intended for **advanced users** of MongoDB
 who know and understand the growth of a model on a schemaless database.
 
 When I mean "micro", I mean the sum of NCLOC is about one hundred. Therefore it is fast as hell.
 
+## Install
+### Include the bundle
+```bash
+$ composer require trismegiste/strangelove-bundle
+```
+### Configure the bundle
+Just add ```strangelove.yaml``` into the ```config/packages``` folder
+```yaml
+strangelove:
+    mongodb:
+        url: mongodb://192.168.1.66:27017  # optional if localhost and default port
+        dbname: the_world   # database name
+```
+### Create a Repository on a collection
+Create a subclass of ```Trismegiste\Strangelove\MongoDb\DefaultRepository``` and extend it with business features.
+
+### Register the service
+Into ```services.yaml```, just add :
+```yaml
+    App\Repository\MyMovies:
+        $collectionName: movies
+```
 ## How
 Since you have atomicity on one document in MongoDB, you have to store complex
 tree-ish objects. If you avoid circular references, this ODM stores your object
@@ -87,4 +110,4 @@ Just run :
 $ phpdbg -qrr vendor/bin/phpunit
 ```
 
-Html results are stored in ./doc/coverage.
+Html results are stored in ./docs/coverage.
