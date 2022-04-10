@@ -20,13 +20,25 @@ class RepositoryAutoConfigTest extends TestCase
         $this->sut = new RepositoryAutoConfig();
     }
 
-    public function testPass()
+    public function testNoMongoService()
+    {
+        $cont = new ContainerBuilder();
+        $this->sut->process($cont);
+        $this->assertFalse($cont->hasDefinition('mongodb'));
+    }
+
+    public function testValidConfig()
     {
         $cont = new ContainerBuilder();
         $cont->setParameter('mongodb.dbname', 'yolo');
-        $cont->setDefinition('mongodb', new Definition(DefaultRepository::class));
+        $cont->setDefinition('mongodb', new Definition());
+
+        $def = new Definition(DefaultRepository::class, ['$manager' => 'dummy', '$dbName' => 'dummy']);
+        $def->addTag('mongodb.repository');
+        $cont->setDefinition('myrepo', $def);
 
         $this->sut->process($cont);
+        $this->assertTrue($cont->hasDefinition('myrepo'));
     }
 
 }

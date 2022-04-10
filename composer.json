@@ -3,7 +3,8 @@
     "description": "How I Learned to Stop Worrying about ORM and Love MongoDb BSON",
     "type": "library",
     "require-dev": {
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "symfony/yaml": "^5.4"
     },
     "license": "MIT",
     "authors": [
