@@ -1,8 +1,8 @@
 <?php
 
 use Symfony\Component\Form\Test\TypeTestCase;
-use Trismegiste\Strangelove\MongoDb\Form\BsonDateType;
-use Trismegiste\Strangelove\MongoDb\Type\BsonDateTime;
+use Trismegiste\Strangelove\Form\BsonDateType;
+use Trismegiste\Strangelove\Type\BsonDateTime;
 
 class BsonDateTypeTest extends TypeTestCase
 {

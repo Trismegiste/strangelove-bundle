@@ -13,8 +13,7 @@ use Tests\Fixtures\Nucleus;
 use Tests\Fixtures\Quark;
 use Tests\Fixtures\Vector;
 use Tests\Strangelove\MongoDb\MongoTestable;
-use Trismegiste\Strangelove\MongoDb\Type\BsonDateTime;
-use Trismegiste\Strangelove\MongoDb\Type\MongoDateTime;
+use Trismegiste\Strangelove\Type\BsonDateTime;
 
 class PersistableImplTest extends MongoTestable
 {

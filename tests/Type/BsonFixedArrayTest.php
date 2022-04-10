@@ -4,14 +4,17 @@
  * Strangelove
  */
 
-class BsonFixedArrayTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+use Trismegiste\Strangelove\Type\BsonFixedArray;
+
+class BsonFixedArrayTest extends TestCase
 {
 
     protected $sut;
 
     protected function setUp(): void
     {
-        $this->sut = new \Trismegiste\Strangelove\MongoDb\Type\BsonFixedArray();
+        $this->sut = new BsonFixedArray();
     }
 
     public function testEmpty()
@@ -35,6 +38,7 @@ class BsonFixedArrayTest extends \PHPUnit\Framework\TestCase
     {
         $obj = \MongoDB\BSON\toPHP(MongoDB\BSON\fromJSON($json));
 
+        $this->assertInstanceOf(SplFixedArray::class, $obj);
         $this->assertCount(256, $obj);
         $this->assertEquals(6.62, $obj[255]);
     }

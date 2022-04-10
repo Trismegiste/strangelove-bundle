@@ -1,12 +1,12 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
-use Trismegiste\Strangelove\MongoDb\Type\BsonDateTime;
-use Trismegiste\Strangelove\MongoDb\Type\BsonObjectStorage;
-
 /*
  * Strangelove
  */
+
+use PHPUnit\Framework\TestCase;
+use Trismegiste\Strangelove\Type\BsonDateTime;
+use Trismegiste\Strangelove\Type\BsonObjectStorage;
 
 class BsonObjectStorageTest extends TestCase
 {
@@ -47,6 +47,7 @@ class BsonObjectStorageTest extends TestCase
     {
         $obj = \MongoDB\BSON\toPHP(MongoDB\BSON\fromJSON($json));
 
+        $this->assertInstanceOf(SplObjectStorage::class, $obj);
         $this->assertCount(1, $obj);
         $obj->rewind();
         $this->assertInstanceOf(stdClass::class, $obj->current());

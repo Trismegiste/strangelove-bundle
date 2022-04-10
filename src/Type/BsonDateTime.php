@@ -4,7 +4,7 @@
  * Strangelove
  */
 
-namespace Trismegiste\Strangelove\MongoDb\Type;
+namespace Trismegiste\Strangelove\Type;
 
 use MongoDB\BSON\Persistable;
 use MongoDB\BSON\UTCDateTime;

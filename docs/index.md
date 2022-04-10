@@ -1,5 +1,5 @@
 # Strangelove
 
-## How I Learned to Stop Worrying about ORM and Love MongoDb BSON
+## How I Learned to Stop Worrying about Doctrine and Love MongoDb BSON
 
 

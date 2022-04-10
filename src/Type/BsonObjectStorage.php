@@ -4,7 +4,7 @@
  * Strangelove
  */
 
-namespace Trismegiste\Strangelove\MongoDb\Type;
+namespace Trismegiste\Strangelove\Type;
 
 /**
  * This is a SplObjectStorage with BSON capabilities

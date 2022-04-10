@@ -4,10 +4,10 @@
  * Strangelove
  */
 
-namespace Trismegiste\Strangelove\MongoDb\Form;
+namespace Trismegiste\Strangelove\Form;
 
 use Symfony\Component\Form\DataTransformerInterface;
-use Trismegiste\Strangelove\MongoDb\Type\BsonDateTime;
+use Trismegiste\Strangelove\Type\BsonDateTime;
 
 /**
  * Transform a PHP DateTime into BsonDateTime

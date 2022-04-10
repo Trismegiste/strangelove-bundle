@@ -4,14 +4,17 @@
  * Strangelove
  */
 
-class BsonDateTimeTest extends \PHPUnit\Framework\TestCase
+use PHPUnit\Framework\TestCase;
+use Trismegiste\Strangelove\Type\BsonDateTime;
+
+class BsonDateTimeTest extends TestCase
 {
 
     protected $sut;
 
     protected function setUp(): void
     {
-        $this->sut = new Trismegiste\Strangelove\MongoDb\Type\BsonDateTime('2022-04-01 12:34:56', new DateTimeZone('Asia/Tokyo'));
+        $this->sut = new BsonDateTime('2022-04-01 12:34:56', new DateTimeZone('Asia/Tokyo'));
     }
 
     public function testSerialize()
@@ -26,6 +29,7 @@ class BsonDateTimeTest extends \PHPUnit\Framework\TestCase
     public function testUnserialize(string $json)
     {
         $obj = \MongoDB\BSON\toPHP(MongoDB\BSON\fromJSON($json));
+        $this->assertInstanceOf(BsonDateTime::class, $obj);
         $this->assertEquals('2022-04-01T12:34:56+09:00', $obj->format(DateTime::ATOM));
     }
 
