@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Trismegiste\Strangelove\MongoDb\DefaultRepository;
 
 /**
- * Config extension
+ * Extension configration for Strangelove bundle
  */
 class StrangeloveExtension extends Extension
 {
