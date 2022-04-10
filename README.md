@@ -1,6 +1,6 @@
 # Strangelove
 
-![How I Learned to Stop Worrying about Doctrine and Love MongoDb BSON](https://github.com/Trismegiste/toolbox/blob/bundle/docs/strangelove-title.png)
+![How I Learned to Stop Worrying about Doctrine and Love MongoDb BSON](https://github.com/Trismegiste/strangelove-bundle/blob/master/docs/strangelove-title.png)
 
 A symfony bundle for stopping the chase after the mythical object-database, or its fake approximation a.k.a Doctrine.
 
