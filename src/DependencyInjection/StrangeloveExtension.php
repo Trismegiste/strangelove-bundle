@@ -35,8 +35,7 @@ class StrangeloveExtension extends Extension
         $container->setParameter('mongodb.dbname', $config['mongodb']['dbname']);
 
         $container->registerForAutoconfiguration(DefaultRepository::class)
-            ->addTag('mongodb.repository')
-        ;
+            ->addTag('mongodb.repository');
     }
 
 }

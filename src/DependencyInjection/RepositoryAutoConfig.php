@@ -31,6 +31,9 @@ class RepositoryAutoConfig implements CompilerPassInterface
             $repoService->replaceArgument('$manager', new Reference('mongodb'));
             $repoService->replaceArgument('$dbName', $dbName);
         }
+
+        $container->getDefinition('twig.loader.native_filesystem')
+            ->addMethodCall('addPath', [__DIR__ . '/../../templates', 'Strangelove']);
     }
 
 }

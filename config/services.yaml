@@ -3,10 +3,22 @@ services:
         class: \MongoDB\Driver\Manager
         arguments:
             - 'url_to_mongodb_server'
-
+            
     mongodb.factory:
         class: \Trismegiste\Strangelove\MongoDb\RepositoryFactory
         arguments:
             $manager: '@mongodb'
             $dbName: 'delete_this_database_if_you_see_it'
             $log: '@logger'
+
+    Trismegiste\Strangelove\Profiler\MongoDbCollector:
+        arguments:
+            - '@mongodb.monitoring'
+        tags: 
+            -
+                name: data_collector
+                id: strangelove
+                template: '@Strangelove/profiler/data_collector.html.twig'
+    
+    mongodb.monitoring:
+        class: \Trismegiste\Strangelove\Profiler\CollectingSubscriber
