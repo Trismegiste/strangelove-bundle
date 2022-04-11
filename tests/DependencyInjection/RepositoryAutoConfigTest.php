@@ -32,6 +32,7 @@ class RepositoryAutoConfigTest extends TestCase
         $cont = new ContainerBuilder();
         $cont->setParameter('mongodb.dbname', 'yolo');
         $cont->setDefinition('mongodb', new Definition());
+//        $cont->setDefinition('twig.loader.native_filesystem', new Definition());
 
         $def = new Definition(DefaultRepository::class, ['$manager' => 'dummy', '$dbName' => 'dummy']);
         $def->addTag('mongodb.repository');

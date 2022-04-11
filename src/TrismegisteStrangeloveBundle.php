@@ -11,6 +11,7 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 use Trismegiste\Strangelove\DependencyInjection\RepositoryAutoConfig;
 use Trismegiste\Strangelove\DependencyInjection\StrangeloveExtension;
+use Trismegiste\Strangelove\DependencyInjection\WebProfilerPass;
 
 /**
  * The bundle
@@ -27,6 +28,7 @@ class TrismegisteStrangeloveBundle extends Bundle
     {
         parent::build($container);
         $container->addCompilerPass(new RepositoryAutoConfig());
+        $container->addCompilerPass(new WebProfilerPass());
     }
 
 }

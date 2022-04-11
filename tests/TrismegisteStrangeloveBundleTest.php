@@ -23,7 +23,7 @@ class TrismegisteStrangeloveBundleTest extends TestCase
     public function testCompilerPass()
     {
         $cont = $this->createMock(ContainerBuilder::class);
-        $cont->expects($this->once())
+        $cont->expects($this->exactly(2))
             ->method('addCompilerPass');
         $this->sut->build($cont);
     }
