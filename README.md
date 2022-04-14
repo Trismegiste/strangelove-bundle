@@ -31,6 +31,8 @@ Create a subclass of ```Trismegiste\Strangelove\MongoDb\DefaultRepository``` and
 ### Register the service
 To register the repository class MyMovies on the collection 'movies' into the ```services.yaml``` config file, just add :
 ```yaml
+services:
+    # ... some services
     App\Repository\MyMovies:
         $collectionName: movies
 ```
