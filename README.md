@@ -57,6 +57,27 @@ class MyDocument implements \Trismegiste\Strangelove\MongoDb\Root {
     use \Trismegiste\Strangelove\MongoDb\RootImpl;
 }
 ```
+## Repositories
+There is a default repository against a collection : ```DefaultRepository```.
+
+### Loading
+```php
+$record = $myRepository->load($primaryKey);
+```
+### Persisting
+```php
+$myRepository->save($oneObjectInheritingFromRoot);
+$rimaryKey = $oneObjectInheritingFromRoot->getPk();
+```
+### Searching
+```php
+$iter = $myRepository->search(['price' => ['$ne' => null]]);
+foreach($iter as $record) {
+   var_dump($record);
+}
+```
+
+This class implements the interface Repository. Read the phpdoc about it.
 
 ## Types
 * Don't use DateTime in your model, use BsonDateTime, you have a nice AbstractType for replacing Symfony DateType
@@ -66,10 +87,6 @@ that converts DateTime into BsonDateTime
 
 Please read the documentation about BSON serialization in MongoDB to know
 more : [The MongoDB\BSON\Persistable interface](https://www.php.net/manual/en/class.mongodb-bson-persistable.php)
-
-## Repositories
-There is a default repository against a collection : ```DefaultRepository```.
-It implements the interface Repository. Read the phpdoc about it.
 
 ## Performance
 A thousand of complex objects that contain about a thousand embedded objects take 2.5 seconds to store on a cheap laptop.
