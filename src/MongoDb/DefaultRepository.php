@@ -174,4 +174,23 @@ class DefaultRepository implements Repository
         $this->logResult($result);
     }
 
+    public function searchOne(array $filter = [], array $excludedField = []): ?\MongoDB\BSON\Persistable
+    {
+        $options = ['limit' => 1];
+
+        // options preference on projection
+        if (count($excludedField)) {
+            $options['projection'] = array_fill_keys($excludedField, 0);
+            // in any case we don't exclude these two fields for BSON serialization :
+            unset($options['projection']['_id']);
+            unset($options['projection']['__pclass']);
+        }
+
+        $this->logger->debug('Searching One Document in ' . $this->collectionName . ' for ' . json_encode($filter));
+        $cursor = $this->manager->executeQuery($this->getNamespace(), new Query($filter, $options));
+        $rows = iterator_to_array($cursor);
+
+        return (count($rows)) ? $rows[0] : null;
+    }
+
 }

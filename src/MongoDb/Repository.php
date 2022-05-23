@@ -22,6 +22,14 @@ interface Repository
     public function search(array $filter = [], array $excludedField = [], string $descendingSortField = null): \Iterator;
 
     /**
+     * Returns the first document found in the collection or null
+     * @param array $filter the query
+     * @param array $excludedField fields to exclude if you don't need them
+     * @return \MongoDB\BSON\Persistable|null
+     */
+    public function searchOne(array $filter = [], array $excludedField = []): ?\MongoDB\BSON\Persistable;
+
+    /**
      * Load ONE object stored in the collection by its PK
      * @param string $pk the primary key (a.k.a field "_id")
      * @return \Trismegiste\Strangelove\MongoDb\Root

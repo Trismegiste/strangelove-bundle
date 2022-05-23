@@ -48,6 +48,12 @@ class DefaultRepositoryTest extends TestCase
         $this->assertTrue($result->isAcknowledged());
     }
 
+    public function testSearchOneWhenEmpty()
+    {
+        $doc = $this->sut->searchOne();
+        $this->assertNull($doc);
+    }
+
     public function testSave()
     {
         $doc = $this->createAtom('U235', 92, 235);
@@ -73,6 +79,13 @@ class DefaultRepositoryTest extends TestCase
         $this->assertInstanceOf(Atom::class, $result[0]);
 
         return (string) $result[0]->getPk();
+    }
+
+    public function testSearchOne()
+    {
+        $doc = $this->sut->searchOne([], ['electron']);
+        $this->assertNotNull($doc);
+        $this->assertInstanceOf(Atom::class, $doc);
     }
 
     /** @depends testSearch */
