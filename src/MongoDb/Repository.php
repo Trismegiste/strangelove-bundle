@@ -25,9 +25,9 @@ interface Repository
      * Returns the first document found in the collection or null
      * @param array $filter the query
      * @param array $excludedField fields to exclude if you don't need them
-     * @return \MongoDB\BSON\Persistable|null
+     * @return Root|null
      */
-    public function searchOne(array $filter = [], array $excludedField = []): ?\MongoDB\BSON\Persistable;
+    public function searchOne(array $filter = [], array $excludedField = []): ?Root;
 
     /**
      * Load ONE object stored in the collection by its PK

@@ -174,7 +174,7 @@ class DefaultRepository implements Repository
         $this->logResult($result);
     }
 
-    public function searchOne(array $filter = [], array $excludedField = []): ?\MongoDB\BSON\Persistable
+    public function searchOne(array $filter = [], array $excludedField = []): ?Root
     {
         $options = ['limit' => 1];
 
