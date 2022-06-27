@@ -12,8 +12,20 @@ namespace Trismegiste\Strangelove\MongoDb;
 trait PersistableImpl
 {
 
+    protected function beforeSave(): void
+    {
+        
+    }
+
+    protected function afterLoad(): void
+    {
+        
+    }
+
     public function bsonSerialize()
     {
+        $this->beforeSave();
+
         $ret = get_object_vars($this);
 
         if (array_key_exists('_id', $ret) && is_null($ret['_id'])) {
@@ -35,6 +47,8 @@ trait PersistableImpl
                 $this->$key = $val;
             }
         }
+
+        $this->afterLoad();
     }
 
 }

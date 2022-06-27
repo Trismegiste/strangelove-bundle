@@ -86,4 +86,23 @@ class PersistableImplTest extends MongoTestable
         $this->assertEquals('Feyd', $dump['name']);
     }
 
+    public function testBeforeSave()
+    {
+        $obj = new \Tests\Fixtures\WithCleaning();
+        $serialized = MongoDB\BSON\toJSON(MongoDB\BSON\fromPHP($obj));
+        $dump = json_decode($serialized, true);
+        $this->assertEqualsWithDelta(time(), $dump['timestamp']['$date'] / 1000, 1);
+        $this->assertEquals(1, $dump['saveCounter']);
+        $this->assertEquals(0, $dump['loadCounter']);
+
+        return $serialized;
+    }
+
+    /** @depends testBeforeSave */
+    public function testAfterLoad(string $content)
+    {
+        $obj = MongoDB\BSON\toPHP(\MongoDB\BSON\fromJSON($content));
+        $this->assertEquals(1, $obj->loadCounter);
+    }
+
 }
