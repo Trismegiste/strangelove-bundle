@@ -35,5 +35,6 @@
             "Tests\\Fixtures\\": "tests/fixtures/",
             "Tests\\Strangelove\\": "tests/"
         }
-    }
+    },
+    "bin": ["bin/install-recipe.php"]
 }
