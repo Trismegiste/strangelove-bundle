@@ -26,7 +26,7 @@ use Symfony\Component\Yaml\Yaml;
                                 'dbname' => $database
                             ]
                         ]
-            ]);
+            ], 3);
 
             $target = getcwd() . '/config/packages/strangelove.yaml';
             if ($io->confirm("Are you sure you want to create the configuration file '$target' (Warning : any existing file will be overwritten)")) {
