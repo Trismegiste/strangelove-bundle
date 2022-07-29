@@ -17,13 +17,11 @@ When I mean "micro", I mean the sum of NCLOC is about one hundred. Therefore it 
 ```bash
 $ composer require trismegiste/strangelove-bundle
 ```
+You'll probably get an error at cache clearing since the config file ```strangelove.yaml``` does not exist yet.
 ### Configure the bundle
-Just add ```strangelove.yaml``` into the ```config/packages``` folder
-```yaml
-strangelove:
-    mongodb:
-        url: mongodb://192.168.1.66:27017  # optional if localhost and default port
-        dbname: the_world   # database name
+Just run the wizard and answer the questions :
+```bash
+$ vendor/bin/strangelove-wizard.php
 ```
 ### Create a Repository on a collection
 Create a subclass of ```Trismegiste\Strangelove\MongoDb\DefaultRepository``` and extend it with business features.
