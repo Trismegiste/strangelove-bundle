@@ -22,7 +22,7 @@ trait PersistableImpl
         
     }
 
-    public function bsonSerialize()
+    public function bsonSerialize(): array
     {
         $this->beforeSave();
 
