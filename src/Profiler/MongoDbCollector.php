@@ -24,7 +24,7 @@ class MongoDbCollector extends AbstractDataCollector
         \MongoDB\Driver\Monitoring\addSubscriber($subscriber);
     }
 
-    public function collect(Request $request, Response $response, \Throwable $exception = null)
+    public function collect(Request $request, Response $response, \Throwable $exception = null): void
     {
         $this->data = [
             'succeed' => $this->monitoring->succeed,
@@ -52,5 +52,4 @@ class MongoDbCollector extends AbstractDataCollector
     {
         return $this->data['started'];
     }
-
 }

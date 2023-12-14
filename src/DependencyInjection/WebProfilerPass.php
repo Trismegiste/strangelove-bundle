@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 class WebProfilerPass implements CompilerPassInterface
 {
 
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $container->getDefinition('twig.loader.native_filesystem')
                 ->addMethodCall('addPath', [dirname(dirname(__DIR__)) . '/templates', 'Strangelove']);
