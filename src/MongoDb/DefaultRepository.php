@@ -6,10 +6,14 @@
 
 namespace Trismegiste\Strangelove\MongoDb;
 
+use Iterator;
+use IteratorIterator;
 use LogicException;
+use MongoDB\BSON\Binary;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use MongoDB\Driver\BulkWrite;
+use MongoDB\Driver\Cursor;
 use MongoDB\Driver\Manager;
 use MongoDB\Driver\Query;
 use MongoDB\Driver\WriteResult;
@@ -104,7 +108,7 @@ class DefaultRepository implements Repository
         return $found;
     }
 
-    public function search(array $filter = [], array $excludedField = [], string $descendingSortField = null): \Iterator
+    public function search(array $filter = [], array $excludedField = [], string $descendingSortField = null): Iterator
     {
         $options = [];
 
@@ -123,7 +127,7 @@ class DefaultRepository implements Repository
         $this->logger->debug('Searching in ' . $this->collectionName . ' for ' . json_encode($filter));
         $cursor = $this->manager->executeQuery($this->getNamespace(), new Query($filter, $options));
 
-        return new \IteratorIterator($cursor);
+        return new IteratorIterator($cursor);
     }
 
     public function searchAutocomplete(string $field, string $startWith, int $limit = 20): array
@@ -191,6 +195,23 @@ class DefaultRepository implements Repository
         $rows = iterator_to_array($cursor);
 
         return (count($rows)) ? $rows[0] : null;
+    }
+
+    public function searchFieldExistsForClass(string $fqcn, string $fieldName): Cursor
+    {
+        $query = new Query(['__pclass' => new Binary($fqcn, Binary::TYPE_USER_DEFINED), $fieldName => ['$exists' => true]]);
+        $cursor = $this->manager->executeQuery($this->getNamespace(), $query);
+
+        return $cursor;
+    }
+
+    public function removeField(string $pk, string $fieldName): void
+    {
+        $bulk = new BulkWrite();
+        $this->logger->debug("Removing $fieldName field in document $pk");
+        $bulk->update(['_id' => new ObjectId($pk)], ['$unset' => [$fieldName => '']]);
+        $result = $this->manager->executeBulkWrite($this->getNamespace(), $bulk);
+        $this->logResult($result);
     }
 
 }

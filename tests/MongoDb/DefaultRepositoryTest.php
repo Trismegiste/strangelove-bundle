@@ -221,4 +221,28 @@ class DefaultRepositoryTest extends TestCase
         $this->assertEquals(666, $newObj->getContent()['counter']);
     }
 
+    public function testInjectedField()
+    {
+        $obj = new \Tests\Fixtures\Product();
+        $obj->dynamic = 1234;
+        $this->sut->save($obj);
+
+        $iter = $this->sut->searchFieldExistsForClass(\Tests\Fixtures\Product::class, 'dynamic');
+        $loaded = iterator_to_array($iter);
+        $this->assertCount(1, $loaded);
+        $this->assertEquals(1234, $loaded[0]->dynamic);
+
+        return $loaded[0]->getPk();
+    }
+
+    /** @depends testInjectedField */
+    public function testRemoveField(ObjectIdInterface $pk)
+    {
+        $this->sut->removeField($pk, "dynamic");
+        // reload
+        $iter = $this->sut->searchFieldExistsForClass(\Tests\Fixtures\Product::class, 'dynamic');
+        $loaded = iterator_to_array($iter);
+        $this->assertCount(0, $loaded);
+    }
+
 }
