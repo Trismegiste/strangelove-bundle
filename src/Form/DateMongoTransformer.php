@@ -15,12 +15,12 @@ use Trismegiste\Strangelove\Type\BsonDateTime;
 class DateMongoTransformer implements DataTransformerInterface
 {
 
-    public function reverseTransform($value)
+    public function reverseTransform(mixed $value): mixed
     {
         return empty($value) ? null : new BsonDateTime($value);
     }
 
-    public function transform($value)
+    public function transform(mixed $value): mixed
     {
         return empty($value) ? null : $value->getDateTime();
     }

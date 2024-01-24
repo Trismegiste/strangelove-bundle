@@ -12,6 +12,7 @@ use Trismegiste\Strangelove\MongoDb\PersistableImpl;
 /**
  * Description of Nucleus
  */
+#[\AllowDynamicProperties]
 class Nucleus implements Persistable, ElectricCharge {
 
     use PersistableImpl;

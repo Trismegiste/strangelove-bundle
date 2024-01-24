@@ -107,10 +107,7 @@ class DefaultRepositoryTest extends TestCase
     {
         $iter = $this->sut->search([], ['electron']); // we don't care about electrons
         list($atom) = iterator_to_array($iter);
-        // the property array 'electron' in Atom was not restored, therefore, it creates an error when you array_push()
-        $this->expectError();
-        $this->expectErrorMessage('null given');
-        $atom->addElectron(new Lepton('electron'));
+        $this->assertEquals(0, $atom->getElectronCount());
     }
 
     public function dont_testPerformance()

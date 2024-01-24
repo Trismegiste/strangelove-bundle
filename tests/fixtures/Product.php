@@ -8,6 +8,7 @@ use Trismegiste\Strangelove\MongoDb\RootImpl;
 /**
  * Fixtures
  */
+#[\AllowDynamicProperties]
 class Product implements Root
 {
 

@@ -12,6 +12,7 @@ use Trismegiste\Strangelove\MongoDb\PersistableImpl;
 /**
  * Description of Lepton
  */
+#[\AllowDynamicProperties]
 class Lepton extends Elementary implements Persistable {
 
     use PersistableImpl;

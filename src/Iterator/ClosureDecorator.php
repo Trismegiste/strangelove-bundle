@@ -33,13 +33,13 @@ class ClosureDecorator implements Iterator
      * Returns the current element of the iterator decorated by the callable
      * @return mixed
      */
-    public function current()
+    public function current(): mixed
     {
         return ($this->strategy)($this->iter->current());
     }
 
     // next methods are just redirections
-    public function key()
+    public function key(): mixed
     {
         return $this->iter->key();
     }

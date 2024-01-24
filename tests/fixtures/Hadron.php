@@ -9,6 +9,7 @@ namespace Tests\Fixtures;
 /**
  * Description of Hadron
  */
+#[\AllowDynamicProperties]
 class Hadron extends Elementary implements ElectricCharge {
 
     protected $quark;

@@ -12,6 +12,7 @@ use Trismegiste\Strangelove\MongoDb\PersistableImpl;
 /**
  * Description of Internal
  */
+#[\AllowDynamicProperties]
 class Internal implements Persistable
 {
 
