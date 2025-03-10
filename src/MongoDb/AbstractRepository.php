@@ -13,10 +13,12 @@ use MongoDB\BSON\Binary;
 use MongoDB\BSON\ObjectId;
 use MongoDB\BSON\Regex;
 use MongoDB\Driver\BulkWrite;
+use MongoDB\Driver\Command;
 use MongoDB\Driver\Cursor;
 use MongoDB\Driver\Manager;
 use MongoDB\Driver\Query;
 use MongoDB\Driver\WriteResult;
+use Override;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 
@@ -208,5 +210,30 @@ abstract class AbstractRepository implements Repository
         $bulk->update(['_id' => new ObjectId($pk)], ['$unset' => [$fieldName => '']]);
         $result = $this->manager->executeBulkWrite($this->getNamespace(), $bulk);
         $this->logResult($result);
+    }
+
+    #[Override]
+    public function readPipeline(array $pipeline): Cursor
+    {
+        return $this->manager->executeReadCommand($this->getDbName(), new Command([
+                            'aggregate' => $this->getCollectionName(),
+                            'cursor' => ['batchSize' => 0],
+                            'pipeline' => $pipeline
+        ]));
+    }
+
+    #[Override]
+    public function executeCommand(array $commandParameters): mixed
+    {
+        $cmd = new Command($commandParameters);
+
+        $cursor = $this->manager->executeCommand($this->getDbName(), $cmd);
+        $response = $cursor->toArray()[0];
+
+        if (!$response->ok) {
+            throw new RuntimeException($response->note);
+        }
+
+        return $response;
     }
 }

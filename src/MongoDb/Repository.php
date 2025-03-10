@@ -6,6 +6,9 @@
 
 namespace Trismegiste\Strangelove\MongoDb;
 
+use Iterator;
+use MongoDB\Driver\Cursor;
+
 /**
  * Minimal repository interface for MongoDb
  */
@@ -17,9 +20,9 @@ interface Repository
      * @param array $filter the query
      * @param array $excludedField fields to exclude if you don't need them
      * @param string $descendingSortField field name for sorting in descending order
-     * @return \Iterator Warning : this iterator is not rewindable (since it's a wrapper for a Cursor
+     * @return Iterator Warning : this iterator is not rewindable (since it's a wrapper for a Cursor
      */
-    public function search(array $filter = [], array $excludedField = [], string $descendingSortField = null): \Iterator;
+    public function search(array $filter = [], array $excludedField = [], string $descendingSortField = null): Iterator;
 
     /**
      * Returns the first document found in the collection or null
@@ -32,7 +35,7 @@ interface Repository
     /**
      * Load ONE object stored in the collection by its PK
      * @param string $pk the primary key (a.k.a field "_id")
-     * @return \Trismegiste\Strangelove\MongoDb\Root
+     * @return Root
      */
     public function load(string $pk): Root;
 
@@ -66,4 +69,19 @@ interface Repository
      * @param int $amount how much to increment
      */
     public function incField(string $pk, string $fieldName, int $amount = 1): void;
+
+    /**
+     * Execute a pipeline for reading document
+     * @see https://www.mongodb.com/docs/v6.0/reference/operator/aggregation-pipeline/#stages
+     * @param array $pipeline
+     * @return Cursor
+     */
+    public function readPipeline(array $pipeline): Cursor;
+
+    /**
+     * Execute a command
+     * @param array $commandParameters
+     * @return mixed
+     */
+    public function executeCommand(array $commandParameters): mixed;
 }

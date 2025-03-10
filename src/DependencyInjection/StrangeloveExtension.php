@@ -8,8 +8,8 @@ namespace Trismegiste\Strangelove\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Trismegiste\Strangelove\MongoDb\DefaultRepository;
 
 /**
@@ -35,7 +35,6 @@ class StrangeloveExtension extends Extension
         $container->setParameter('mongodb.dbname', $config['mongodb']['dbname']);
 
         $container->registerForAutoconfiguration(DefaultRepository::class)
-            ->addTag('mongodb.repository');
+                ->addTag('mongodb.repository');
     }
-
 }

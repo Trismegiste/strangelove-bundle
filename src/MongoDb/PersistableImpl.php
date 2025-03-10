@@ -35,20 +35,28 @@ trait PersistableImpl
         return $ret;
     }
 
+    protected function recursiveStdClass2Array(array &$arr): void
+    {
+        array_walk($arr, function (&$value) {
+            if (is_object($value) && get_class($value) === 'stdClass') {
+                $value = (array) $value;
+            }
+            if (is_array($value)) {
+                $this->recursiveStdClass2Array($value);
+            }
+        });
+    }
+
     public function bsonUnserialize(array $data): void
     {
         unset($data['__pclass']);
 
+        $this->recursiveStdClass2Array($data);
+
         foreach ($data as $key => $val) {
-            // forced conversion of stdClass into arrays
-            if (is_object($val) && get_class($val) === 'stdClass') {
-                $this->$key = (array) $val;
-            } else {
-                $this->$key = $val;
-            }
+            $this->$key = $val;
         }
 
         $this->afterLoad();
     }
-
 }
