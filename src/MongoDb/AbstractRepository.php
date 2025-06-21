@@ -80,7 +80,7 @@ abstract class AbstractRepository implements Repository
                 $id = $bulk->insert($doc);
                 $doc->setPk($id);
             } else {
-                $bulk->update(['_id' => $doc->getPk()], $doc);
+                $bulk->update(['_id' => $doc->getPk()], $doc, ['upsert' => true]);
             }
         }
 
@@ -133,7 +133,7 @@ abstract class AbstractRepository implements Repository
         $cursor = $this->manager->executeQuery($this->getNamespace(), new Query(
                         [$field => new Regex('^' . $startWith, 'i')],
                         ['limit' => $limit, 'sort' => [$field => 1], 'projection' => [$field => true]]
-                ));
+        ));
 
         return $cursor->toArray();
     }
@@ -195,9 +195,14 @@ abstract class AbstractRepository implements Repository
         return (count($rows)) ? $rows[0] : null;
     }
 
+    protected function pclass(string $fqcn): Binary
+    {
+        return new Binary($fqcn, Binary::TYPE_USER_DEFINED);
+    }
+
     public function searchFieldExistsForClass(string $fqcn, string $fieldName): Cursor
     {
-        $query = new Query(['__pclass' => new Binary($fqcn, Binary::TYPE_USER_DEFINED), $fieldName => ['$exists' => true]]);
+        $query = new Query(['__pclass' => $this->pclass($fqcn), $fieldName => ['$exists' => true]]);
         $cursor = $this->manager->executeQuery($this->getNamespace(), $query);
 
         return $cursor;
