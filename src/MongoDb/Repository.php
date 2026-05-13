@@ -14,7 +14,6 @@ use MongoDB\Driver\Cursor;
  */
 interface Repository
 {
-
     /**
      * Returns an Iterator of Root objects for the query
      * @param array $filter the query
@@ -22,8 +21,7 @@ interface Repository
      * @param string $descendingSortField field name for sorting in descending order
      * @return Iterator Warning : this iterator is not rewindable (since it's a wrapper for a Cursor
      */
-    public function search(array $filter = [], array $excludedField = [], string $descendingSortField = null): Iterator;
-
+    public function search(array $filter = [], array $excludedField = [], string|null $descendingSortField = null): Iterator;
     /**
      * Returns the first document found in the collection or null
      * @param array $filter the query
@@ -31,26 +29,22 @@ interface Repository
      * @return Root|null
      */
     public function searchOne(array $filter = [], array $excludedField = []): ?Root;
-
     /**
      * Load ONE object stored in the collection by its PK
      * @param string $pk the primary key (a.k.a field "_id")
      * @return Root
      */
     public function load(string $pk): Root;
-
     /**
      * Persists one or many document in the collection
      * @param Root|Root[] $documentOrArray a Root object or an array of Root objects to persist
      */
     public function save($documentOrArray): void;
-
     /**
      * Deletes one or many document in the collection
      * @param Root|Root[] $documentOrArray a Root object or an array of Root objects to delete
      */
     public function delete($documentOrArray): void;
-
     /**
      * Gets an array of possible choices for one field starting with the provided string.
      * NOTE : this method DOES NOT return full objects but only a minimal stdClass 
@@ -61,7 +55,6 @@ interface Repository
      * @param int $limit a limit for result : since we return an array, please don't load the memory
      */
     public function searchAutocomplete(string $field, string $startWith, int $limit = 20);
-
     /**
      * Increments a field in a entity (direct access without loading entity from mongodb
      * @param string $pk if entity primary key
@@ -69,7 +62,6 @@ interface Repository
      * @param int $amount how much to increment
      */
     public function incField(string $pk, string $fieldName, int $amount = 1): void;
-
     /**
      * Execute a pipeline for reading document
      * @see https://www.mongodb.com/docs/v6.0/reference/operator/aggregation-pipeline/#stages
@@ -77,7 +69,6 @@ interface Repository
      * @return Cursor
      */
     public function readPipeline(array $pipeline): Cursor;
-
     /**
      * Execute a command
      * @param array $commandParameters

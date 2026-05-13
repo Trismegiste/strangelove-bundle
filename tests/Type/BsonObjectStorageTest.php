@@ -4,13 +4,13 @@
  * Strangelove
  */
 
+use MongoDB\BSON\Document;
 use PHPUnit\Framework\TestCase;
 use Trismegiste\Strangelove\Type\BsonDateTime;
 use Trismegiste\Strangelove\Type\BsonObjectStorage;
 
 class BsonObjectStorageTest extends TestCase
 {
-
     protected $sut;
 
     protected function setUp(): void
@@ -36,7 +36,7 @@ class BsonObjectStorageTest extends TestCase
         $obj = new stdClass();
         $this->sut[$obj] = 123;
 
-        $dump = \MongoDB\BSON\toJSON(\MongoDB\BSON\fromPHP($this->sut));
+        $dump = Document::fromPHP($this->sut)->toRelaxedExtendedJSON();
         $this->assertJson($dump);
 
         return $dump;
@@ -45,7 +45,7 @@ class BsonObjectStorageTest extends TestCase
     /** @depends testSerialize */
     public function testUnserialize(string $json)
     {
-        $obj = \MongoDB\BSON\toPHP(MongoDB\BSON\fromJSON($json));
+        $obj = Document::fromJSON($json)->toPHP();
 
         $this->assertInstanceOf(SplObjectStorage::class, $obj);
         $this->assertCount(1, $obj);
@@ -59,7 +59,7 @@ class BsonObjectStorageTest extends TestCase
         $obj = new BsonDateTime('1997-12-25');
         $this->sut[$obj] = 456;
 
-        $dump = \MongoDB\BSON\toJSON(\MongoDB\BSON\fromPHP($this->sut));
+        $dump = Document::fromPHP($this->sut)->toRelaxedExtendedJSON();
         $this->assertJson($dump);
 
         return $dump;
@@ -68,7 +68,7 @@ class BsonObjectStorageTest extends TestCase
     /** @depends testSerializeCombo */
     public function testUnserializeCombo(string $json)
     {
-        $obj = \MongoDB\BSON\toPHP(MongoDB\BSON\fromJSON($json));
+        $obj = Document::fromJSON($json)->toPHP();
 
         $this->assertCount(1, $obj);
         $obj->rewind();
@@ -76,5 +76,4 @@ class BsonObjectStorageTest extends TestCase
         $this->assertEquals('1997-12-25', $obj->current()->format('Y-m-d'));
         $this->assertEquals(456, $obj->getInfo());
     }
-
 }

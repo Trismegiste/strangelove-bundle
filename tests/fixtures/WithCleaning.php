@@ -6,24 +6,27 @@
 
 namespace Tests\Fixtures;
 
-class WithCleaning implements \MongoDB\BSON\Persistable
+use MongoDB\BSON\Persistable;
+use MongoDB\BSON\UTCDateTime;
+use Trismegiste\Strangelove\MongoDb\PersistableImpl;
+
+class WithCleaning implements Persistable
 {
 
-    use \Trismegiste\Strangelove\MongoDb\PersistableImpl;
+    use PersistableImpl;
 
-    protected $timestamp;
-    protected $saveCounter = 0;
-    public $loadCounter = 0;
+    protected UTCDateTime $timestamp;
+    protected int $saveCounter = 0;
+    public int $loadCounter = 0;
 
     protected function beforeSave(): void
     {
         $this->saveCounter++;
-        $this->timestamp = new \MongoDB\BSON\UTCDateTime();
+        $this->timestamp = new UTCDateTime();
     }
 
     protected function afterLoad(): void
     {
         $this->loadCounter++;
     }
-
 }

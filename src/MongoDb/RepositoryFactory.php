@@ -16,13 +16,12 @@ use Psr\Log\NullLogger;
  */
 class RepositoryFactory
 {
-
     protected $manager;
     protected $dbName;
     protected $collection;
     protected $logger;
 
-    public function __construct(Manager $manager, string $dbName, LoggerInterface $log = null)
+    public function __construct(Manager $manager, string $dbName, LoggerInterface|null $log = null)
     {
         $this->manager = $manager;
         $this->dbName = $dbName;
@@ -38,5 +37,4 @@ class RepositoryFactory
 
         return $this->collection[$collectionName];
     }
-
 }

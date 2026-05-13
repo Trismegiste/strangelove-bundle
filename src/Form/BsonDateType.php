@@ -16,13 +16,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class BsonDateType extends AbstractType
 {
-
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->addModelTransformer(new DateMongoTransformer(), true);
     }
 
-    public function getParent()
+    public function getParent(): string
     {
         return DateType::class;
     }
@@ -31,5 +30,4 @@ class BsonDateType extends AbstractType
     {
         $resolver->setDefault('widget', 'choice');
     }
-
 }

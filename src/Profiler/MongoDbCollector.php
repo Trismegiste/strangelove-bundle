@@ -24,7 +24,7 @@ class MongoDbCollector extends AbstractDataCollector
         \MongoDB\Driver\Monitoring\addSubscriber($subscriber);
     }
 
-    public function collect(Request $request, Response $response, \Throwable $exception = null): void
+    public function collect(Request $request, Response $response, \Throwable|null $exception = null): void
     {
         $this->data = [
             'succeed' => $this->monitoring->succeed,

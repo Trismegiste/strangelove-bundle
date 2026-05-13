@@ -4,6 +4,7 @@
  * Strangelove
  */
 
+use MongoDB\BSON\Document;
 use MongoDB\BSON\ObjectId;
 use Tests\Fixtures\Employee;
 use Tests\Fixtures\Hadron;
@@ -12,12 +13,12 @@ use Tests\Fixtures\Lepton;
 use Tests\Fixtures\Nucleus;
 use Tests\Fixtures\Quark;
 use Tests\Fixtures\Vector;
+use Tests\Fixtures\WithCleaning;
 use Tests\Strangelove\MongoDb\MongoTestable;
 use Trismegiste\Strangelove\Type\BsonDateTime;
 
 class PersistableImplTest extends MongoTestable
 {
-
     public function testDefaultWithoutRoot()
     {
         $obj = $this->resetWriteAndRead(new Lepton("muon"));
@@ -88,10 +89,10 @@ class PersistableImplTest extends MongoTestable
 
     public function testBeforeSave()
     {
-        $obj = new \Tests\Fixtures\WithCleaning();
-        $serialized = MongoDB\BSON\toJSON(MongoDB\BSON\fromPHP($obj));
+        $obj = new WithCleaning();
+        $serialized = Document::fromPHP($obj)->toRelaxedExtendedJSON();
         $dump = json_decode($serialized, true);
-        $this->assertEqualsWithDelta(time(), $dump['timestamp']['$date'] / 1000, 1);
+        $this->assertStringStartsWith(date('Y-m-d'), $dump['timestamp']['$date']);
         $this->assertEquals(1, $dump['saveCounter']);
         $this->assertEquals(0, $dump['loadCounter']);
 
@@ -101,8 +102,7 @@ class PersistableImplTest extends MongoTestable
     /** @depends testBeforeSave */
     public function testAfterLoad(string $content)
     {
-        $obj = MongoDB\BSON\toPHP(\MongoDB\BSON\fromJSON($content));
+        $obj = Document::fromJSON($content)->toPHP();
         $this->assertEquals(1, $obj->loadCounter);
     }
-
 }

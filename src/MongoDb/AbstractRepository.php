@@ -27,11 +27,7 @@ use RuntimeException;
  */
 abstract class AbstractRepository implements Repository
 {
-
-    public function __construct(protected Manager $manager, protected LoggerInterface $logger)
-    {
-        
-    }
+    public function __construct(protected Manager $manager, protected LoggerInterface $logger) {}
 
     protected function getNamespace(): string
     {
@@ -39,9 +35,7 @@ abstract class AbstractRepository implements Repository
     }
 
     abstract protected function getDbName(): string;
-
     abstract protected function getCollectionName(): string;
-
     protected function logResult(WriteResult $result)
     {
         $this->logger->info(sprintf('Write Bulk Result for %s : %d inserted / %d upserted / %d modified / %d deleted',
@@ -106,7 +100,8 @@ abstract class AbstractRepository implements Repository
         return $found;
     }
 
-    public function search(array $filter = [], array $excludedField = [], string $descendingSortField = null): Iterator
+    #[\Override]
+    public function search(array $filter = [], array $excludedField = [], string|null $descendingSortField = null): Iterator
     {
         $options = [];
 

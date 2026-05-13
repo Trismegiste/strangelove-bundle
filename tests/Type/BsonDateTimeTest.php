@@ -4,12 +4,12 @@
  * Strangelove
  */
 
+use MongoDB\BSON\Document;
 use PHPUnit\Framework\TestCase;
 use Trismegiste\Strangelove\Type\BsonDateTime;
 
 class BsonDateTimeTest extends TestCase
 {
-
     protected $sut;
 
     protected function setUp(): void
@@ -19,7 +19,7 @@ class BsonDateTimeTest extends TestCase
 
     public function testSerialize()
     {
-        $dump = \MongoDB\BSON\toJSON(\MongoDB\BSON\fromPHP($this->sut));
+        $dump = Document::fromPHP($this->sut)->toRelaxedExtendedJSON();
         $this->assertJson($dump);
 
         return $dump;
@@ -28,7 +28,7 @@ class BsonDateTimeTest extends TestCase
     /** @depends testSerialize */
     public function testUnserialize(string $json)
     {
-        $obj = \MongoDB\BSON\toPHP(MongoDB\BSON\fromJSON($json));
+        $obj = Document::fromJSON($json)->toPHP();
         $this->assertInstanceOf(BsonDateTime::class, $obj);
         $this->assertEquals('2022-04-01T12:34:56+09:00', $obj->format(DateTime::ATOM));
     }
@@ -36,8 +36,7 @@ class BsonDateTimeTest extends TestCase
     /** @depends testSerialize */
     public function testStringable(string $json)
     {
-        $obj = \MongoDB\BSON\toPHP(MongoDB\BSON\fromJSON($json));
+        $obj = Document::fromJSON($json)->toPHP();
         $this->assertEquals('2022-04-01T12:34:56+09:00', (string) $obj);
     }
-
 }
