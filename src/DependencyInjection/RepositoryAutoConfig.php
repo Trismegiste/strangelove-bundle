@@ -11,11 +11,11 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Compiler pass for autoconfiguring DefaultRepository subclasses
+ * Compiler pass for injecting mongodb manager and database name into every services tagged as 'mongodb.repository'
+ * Are included : every DefaultRepository services and its subclasses
  */
 class RepositoryAutoConfig implements CompilerPassInterface
 {
-
     public function process(ContainerBuilder $container): void
     {
         if (!$container->has('mongodb')) {
@@ -30,7 +30,7 @@ class RepositoryAutoConfig implements CompilerPassInterface
             $repoService = $container->getDefinition($id);
             $repoService->replaceArgument('$manager', new Reference('mongodb'));
             $repoService->replaceArgument('$dbName', $dbName);
+            $repoService->addTag('monolog.logger', ['channel' => 'strangelove']); // if monolog is present, we set the channel
         }
     }
-
 }

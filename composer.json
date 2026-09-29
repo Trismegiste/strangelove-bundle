@@ -20,10 +20,10 @@
         "php": ">7.4",
         "ext-mongodb": ">2.3",
         "psr/log": "^1.1|2.*|3.*",
-        "symfony/form": "^5.4|6.*|7.*|8.*",
-        "symfony/config": "^5.4|6.*|7.*|8.*",
-        "symfony/http-kernel": "^5.4|6.*|7.*|8.*",
-        "symfony/dependency-injection": "^5.4|6.*|7.*|8.*"
+        "symfony/form": "^6.4|7.*|8.*",
+        "symfony/config": "^6.4|7.*|8.*",
+        "symfony/http-kernel": "^6.4|7.*|8.*",
+        "symfony/dependency-injection": "^6.4|7.*|8.*"
     },
     "autoload": {
         "psr-4": {
